@@ -10,7 +10,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const navItems = [
-    { href: "/tentang", label: "Tentang Kami" },
+    { href: "/aboutus", label: "Tentang Kami" },
     { href: "/umkm", label: "UMKM" },
     { href: "/produk", label: "Produk" },
     { href: "/edukasi", label: "Edukasi" },
