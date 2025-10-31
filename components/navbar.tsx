@@ -14,16 +14,10 @@ export default function Navbar() {
     { href: "/umkm", label: "UMKM" },
   ];
 
-  // 🟢 Jika sedang di halaman /aboutus → tampilkan hanya logo
+  // 🌿 Navbar minimal di halaman /aboutus
   if (pathname === "/aboutus") {
     return (
-      <nav
-        className="
-          fixed top-0 left-0 w-full z-50
-          bg-gradient-to-b from-teal-900/60 via-teal-800/40 to-transparent
-          backdrop-blur-xl text-white transition-all duration-300
-        "
-      >
+      <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-gradient-to-b from-teal-900/50 via-teal-800/30 to-transparent">
         <div className="max-w-7xl mx-auto flex items-center justify-center py-4">
           <Link href="/" className="flex items-center gap-2 group">
             <img
@@ -37,83 +31,96 @@ export default function Navbar() {
     );
   }
 
-  // 🟡 Default Navbar untuk halaman lain
+  // 🌿 Default Navbar (halaman selain /aboutus)
   return (
     <nav
       className="
         fixed top-0 left-0 w-full z-50
-        bg-gradient-to-b from-teal-900/60 via-teal-800/40 to-transparent
-        backdrop-blur-xl text-white transition-all duration-300
+        bg-white/70 backdrop-blur-md shadow-sm
+        transition-all duration-300
       "
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-4">
-        {/* Logo */}
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-3">
+        {/* 🟢 Logo */}
         <Link href="/" className="flex items-center gap-2 group">
           <img
-            src="/images/logo.png"
+            src="/images/logo2.png"
             alt="Ecosrot Logo"
-            className="h-14 transition-transform duration-300 group-hover:scale-105"
+            className="h-12 transition-transform duration-300 group-hover:scale-105"
           />
         </Link>
 
-        {/* Menu */}
+        {/* 🟢 Menu Navigasi */}
         <div className="hidden md:flex items-center gap-10 font-medium">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`relative transition duration-300 ${
-                pathname === item.href ? "text-lime-300" : "hover:text-lime-300"
-              }`}
-            >
-              {item.label}
-              <span
-                className={`absolute left-0 -bottom-1 h-[2px] w-full bg-gradient-to-r from-[#01814E] to-[#1F4993] scale-x-0 origin-left transition-transform duration-300 ${
-                  pathname === item.href
-                    ? "scale-x-100"
-                    : "group-hover:scale-x-100"
-                }`}
-              ></span>
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`
+                  relative text-[16px] font-semibold transition duration-300
+                  ${
+                    isActive
+                      ? "text-teal-700"
+                      : "text-gray-700 hover:text-teal-700"
+                  }
+                `}
+              >
+                {item.label}
+                {/* underline highlight */}
+                <span
+                  className={`absolute left-0 -bottom-1 h-[2px] w-full bg-gradient-to-r from-[#01814E] to-[#1F4993] transform transition-transform duration-300 ${
+                    isActive
+                      ? "scale-x-100"
+                      : "scale-x-0 group-hover:scale-x-100"
+                  }`}
+                ></span>
+              </Link>
+            );
+          })}
         </div>
 
-        {/* Search + Buttons */}
+        {/* 🟢 Search + Auth Buttons */}
         <div className="flex items-center gap-4">
+          {/* Search Bar */}
           <div className="relative hidden sm:block">
             <input
               type="text"
-              placeholder="Cari..."
+              placeholder="Cari UMKM..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="
-                rounded-full bg-white/10 border border-white/20 
-                pl-10 pr-4 py-2 text-sm placeholder-white/70
-                focus:outline-none focus:ring-1 focus:ring-lime-400
-                text-white transition-all duration-300
-                hover:bg-white/20
+                rounded-full bg-gray-100 border border-gray-300
+                pl-10 pr-4 py-2 text-sm text-gray-700 placeholder-gray-500
+                focus:outline-none focus:ring-2 focus:ring-teal-500
+                transition-all duration-300 w-48 md:w-56
               "
             />
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-white/70" />
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
           </div>
 
+          {/* Tombol Masuk */}
           <Link
             href="/login"
             className="
-              border border-white/50 px-4 py-1.5 rounded-full
-              hover:bg-white/20 hover:text-white
+              border border-teal-600 text-teal-700 font-medium
+              px-4 py-1.5 rounded-full
+              hover:bg-teal-50 hover:shadow-sm
               transition-all duration-300
             "
           >
             Masuk
           </Link>
+
+          {/* Tombol Daftar */}
           <Link
             href="/register"
             className="
               bg-gradient-to-r from-[#01814E] to-[#1F4993]
-              px-4 py-1.5 rounded-full font-semibold
+              px-5 py-1.5 rounded-full font-semibold
               text-white shadow-md
-              hover:brightness-110 hover:shadow-lg
+              hover:shadow-lg hover:brightness-110
               transition-all duration-300
             "
           >
