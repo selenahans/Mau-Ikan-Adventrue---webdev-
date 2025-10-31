@@ -12,19 +12,38 @@ export default function Navbar() {
   const navItems = [
     { href: "/aboutus", label: "Tentang Kami" },
     { href: "/umkm", label: "UMKM" },
-    { href: "/produk", label: "Produk" },
-    { href: "/edukasi", label: "Edukasi" },
   ];
 
+  // 🟢 Jika sedang di halaman /aboutus → tampilkan hanya logo
+  if (pathname === "/aboutus") {
+    return (
+      <nav
+        className="
+          fixed top-0 left-0 w-full z-50
+          bg-gradient-to-b from-teal-900/60 via-teal-800/40 to-transparent
+          backdrop-blur-xl text-white transition-all duration-300
+        "
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-center py-4">
+          <Link href="/" className="flex items-center gap-2 group">
+            <img
+              src="/images/logo.png"
+              alt="Ecosrot Logo"
+              className="h-16 transition-transform duration-300 group-hover:scale-105"
+            />
+          </Link>
+        </div>
+      </nav>
+    );
+  }
+
+  // 🟡 Default Navbar untuk halaman lain
   return (
     <nav
       className="
         fixed top-0 left-0 w-full z-50
         bg-gradient-to-b from-teal-900/60 via-teal-800/40 to-transparent
-        backdrop-blur-xl
-        text-white
-        transition-all duration-300
-        border-b border-white/10
+        backdrop-blur-xl text-white transition-all duration-300
       "
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-4">
@@ -43,28 +62,17 @@ export default function Navbar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`
-                relative transition duration-300
-                ${
-                  pathname === item.href
-                    ? "text-lime-300"
-                    : "hover:text-lime-300"
-                }
-              `}
+              className={`relative transition duration-300 ${
+                pathname === item.href ? "text-lime-300" : "hover:text-lime-300"
+              }`}
             >
               {item.label}
-              {/* underline animation */}
               <span
-                className={`
-                  absolute left-0 -bottom-1 h-[2px] w-full
-                  bg-gradient-to-r from-[#01814E] to-[#1F4993]
-                  scale-x-0 origin-left transition-transform duration-300
-                  ${
-                    pathname === item.href
-                      ? "scale-x-100"
-                      : "group-hover:scale-x-100"
-                  }
-                `}
+                className={`absolute left-0 -bottom-1 h-[2px] w-full bg-gradient-to-r from-[#01814E] to-[#1F4993] scale-x-0 origin-left transition-transform duration-300 ${
+                  pathname === item.href
+                    ? "scale-x-100"
+                    : "group-hover:scale-x-100"
+                }`}
               ></span>
             </Link>
           ))}

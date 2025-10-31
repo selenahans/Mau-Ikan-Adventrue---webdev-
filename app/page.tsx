@@ -1,11 +1,5 @@
-import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div>
-      <div> 
-        <h1>Welcome to Mau Ikan Adventure</h1>
-      </div>
-    </div>
-  );
+  redirect("/aboutus");
 }
