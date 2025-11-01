@@ -15,7 +15,7 @@ export default function Navbar() {
   ];
 
   // 🌿 Navbar minimal di halaman /aboutus
-  if (pathname === "/aboutus") {
+  if (pathname === "/") {
     return (
       <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-gradient-to-b from-teal-900/50 via-teal-800/30 to-transparent">
         <div className="max-w-7xl mx-auto flex items-center justify-center py-4">
