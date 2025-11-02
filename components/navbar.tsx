@@ -83,23 +83,6 @@ export default function Navbar() {
 
         {/* 🟢 Search + Auth Buttons */}
         <div className="flex items-center gap-4">
-          {/* Search Bar */}
-          <div className="relative hidden sm:block">
-            <input
-              type="text"
-              placeholder="Cari UMKM..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="
-                rounded-full bg-gray-100 border border-gray-300
-                pl-10 pr-4 py-2 text-sm text-gray-700 placeholder-gray-500
-                focus:outline-none focus:ring-2 focus:ring-teal-500
-                transition-all duration-300 w-48 md:w-56
-              "
-            />
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
-          </div>
-
           {/* Tombol Masuk */}
           <Link
             href="/login"
