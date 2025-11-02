@@ -1,0 +1,16 @@
+import { NextResponse } from "next/server";
+import { supabase } from "@/lib/supabaseClient";
+
+export async function GET() {
+  const { data, error } = await supabase
+    .from("umkm")
+    .select("id, name, Kategori_usaha, description, image_url")
+    .order("name", { ascending: true });
+
+  if (error) {
+    console.error("Supabase error:", error.message);
+    return NextResponse.json({ success: false, error: error.message });
+  }
+
+  return NextResponse.json({ success: true, data });
+}
