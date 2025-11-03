@@ -47,3 +47,17 @@ html {
   }
 }
 
+.play-on-hover {
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/about2.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40%;
+}
+
+.play-on-hover:hover {
+  background-image: url("/images/about2gif.gif");
+}
+
+

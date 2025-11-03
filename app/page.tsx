@@ -63,13 +63,45 @@ export default function TentangKami() {
     return (
       <a href="/umkm" className="btn">
         <span>Lihat UMKM</span>
-        <svg width="13px" height="10px" viewBox="0 0 13 18">
+        <svg width="10px" height="20px" viewBox="0 0 13 18">
           <path d="M1,5 L11,5"></path>
-          <polyline points="8 1 12 5 8 9" />
+          <polyline points="8 0 12 6 8 12" />
         </svg>
       </a>
     );
   };
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const HoverLogo = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        width: "40%",
+        height: "auto",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <img
+        src={isHovered ? "/images/about2gif.gif" : "/images/about2.png"}
+        alt="About"
+        style={{
+          width: "100%",
+          height: "auto",
+          objectFit: "contain",
+          transition: "opacity 0.3s ease",
+        }}
+      />
+    </div>
+  );
+};
+
 
   return (
     <div>
@@ -81,15 +113,15 @@ export default function TentangKami() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            scale: "1.7",
-            zIndex: 9999, 
+            scale: "100%",
+            zIndex: 9999,
             pointerEvents: "auto",
           }}
         >
           <HoverButton />
         </ParallaxLayer>
 
-        {/* <ParallaxLayer
+        <ParallaxLayer
           offset={0}
           speed={2}
           factor={4}
@@ -110,31 +142,48 @@ export default function TentangKami() {
           style={{
             backgroundImage: "url(/images/about1rev.png)",
             backgroundPosition: "center",
-            scale: "1",
             pointerEvents: "none",
+            backgroundSize: "60%",
           }}
         ></ParallaxLayer>
         <ParallaxLayer
+          offset={0.6}
+          speed={0.8}
+          sticky={{ start: 0.6, end: 0.8 }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            pointerEvents: "auto",
+            background: "transparent",
+          }}
+        >
+          <HoverLogo />
+        </ParallaxLayer>
+
+        {/* <ParallaxLayer
           offset={0.6}
           speed={0.4}
           style={{
             backgroundImage: "url(/images/about2.png)",
             backgroundPosition: "center",
             pointerEvents: "none",
+            backgroundSize: "40%", 
           }}
           sticky={{ start: 0.6, end: 0.8 }}
-        ></ParallaxLayer>
+        ></ParallaxLayer> */}
+
         <ParallaxLayer
           offset={1.1}
           speed={0.2}
-          onClick={() => router.push("/umkm")}
           style={{
             backgroundImage: "url(/images/about3.png)",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
             pointerEvents: "none",
+            backgroundSize: "60%",
           }}
-        /> */}
+        />
         {/* <ParallaxLayer
           offset={1.8}
           speed={0.3}

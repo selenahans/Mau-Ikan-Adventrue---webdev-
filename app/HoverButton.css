@@ -46,7 +46,8 @@ a {
 
 .btn svg {
   position: relative;
-  top: 0;
+  transform: translateY(-2px);
+  top: 0px;
   margin-left: 10px;
   fill: none;
   stroke-linecap: round;
