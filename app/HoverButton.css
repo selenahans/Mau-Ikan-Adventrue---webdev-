@@ -1,0 +1,71 @@
+/* body {
+  display: grid;
+  color: #111;
+  margin: 10rem 5rem;
+  justify-content: center;
+} */
+ @import url("https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;700&display=swap");
+
+a {
+  text-decoration: none;
+  color: inherit;
+  font-family: "Helvetica Neue";
+}
+.btn {
+  position: relative;
+  margin: 4rem;
+  padding: 19px 22px;
+  transition: all 0.2s ease;
+  align-items: center;
+  display: inline-flex;
+  color: #f6f7ed;          
+  cursor: pointer;
+  z-index: 100;        
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 30px;
+  background: #00804c;
+  width: 60px;
+  height: 60px;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.btn span {
+  position: relative;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.25em;
+    text-transform: uppercase;
+}
+
+.btn svg {
+  position: relative;
+  top: 0;
+  margin-left: 10px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: white;          /* change stroke to white for contrast */
+  stroke-width: 2;
+  transform: translateX(-7px);
+  transition: all 0.3s ease;
+}
+
+.btn:hover::before {
+  width: 100%;
+  background: #74c365 ;
+}
+
+.btn:hover svg {
+  transform: translateX(0);
+}
+
+.btn:active {
+  transform: scale(0.96);
+}

@@ -1,115 +1,151 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Variants, motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useRouter } from "next/navigation";
+import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+import "./HoverButton.css";
 
 export default function TentangKami() {
   const [section, setSection] = useState(1);
   const [scrollDir, setScrollDir] = useState<"up" | "down">("down");
   const router = useRouter();
+  const ref = useRef(null);
 
-  // deteksi arah scroll
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-    const updateScrollDir = () => {
-      const newY = window.scrollY;
-      if (newY > lastScrollY) setScrollDir("down");
-      else if (newY < lastScrollY) setScrollDir("up");
-      lastScrollY = newY > 0 ? newY : 0;
-    };
-    window.addEventListener("scroll", updateScrollDir);
-    return () => window.removeEventListener("scroll", updateScrollDir);
-  }, []);
+  // // deteksi arah scroll
+  // useEffect(() => {
+  //   let lastScrollY = window.scrollY;
+  //   const updateScrollDir = () => {
+  //     const newY = window.scrollY;
+  //     if (newY > lastScrollY) setScrollDir("down");
+  //     else if (newY < lastScrollY) setScrollDir("up");
+  //     lastScrollY = newY > 0 ? newY : 0;
+  //   };
+  //   window.addEventListener("scroll", updateScrollDir);
+  //   return () => window.removeEventListener("scroll", updateScrollDir);
+  // }, []);
 
-  // deteksi posisi section aktif
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const height = window.innerHeight;
-      if (scrollY < height * 0.8) setSection(1);
-      else if (scrollY < height * 1.8) setSection(2);
-      else if (scrollY < height * 2.8) setSection(3);
-      else setSection(4);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // // deteksi posisi section aktif
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const scrollY = window.scrollY;
+  //     const height = window.innerHeight;
+  //     if (scrollY < height * 0.8) setSection(1);
+  //     else if (scrollY < height * 1.8) setSection(2);
+  //     else if (scrollY < height * 2.8) setSection(3);
+  //     else setSection(4);
+  //   };
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
-  // pindah ke /umkm hanya setelah section ke-4 tersentuh bawah
-  useEffect(() => {
-    const handleBottomScroll = () => {
-      const scrollY = window.scrollY;
-      const height = window.innerHeight;
-      const docHeight = document.documentElement.scrollHeight;
+  // // pindah ke /umkm hanya setelah section ke-4 tersentuh bawah
+  // useEffect(() => {
+  //   const handleBottomScroll = () => {
+  //     const scrollY = window.scrollY;
+  //     const height = window.innerHeight;
+  //     const docHeight = document.documentElement.scrollHeight;
 
-      if (scrollY + height >= docHeight - 500) {
-        router.push("/umkm");
-      }
-    };
+  //     if (scrollY + height >= docHeight - 500) {
+  //       router.push("/umkm");
+  //     }
+  //   };
 
-    window.addEventListener("scroll", handleBottomScroll);
-    return () => window.removeEventListener("scroll", handleBottomScroll);
-  }, [router]);
+  //   window.addEventListener("scroll", handleBottomScroll);
+  //   return () => window.removeEventListener("scroll", handleBottomScroll);
+  // }, [router]);
 
-  const bgPosition =
-    section === 1 ? "top" : section === 2 ? "center" : "bottom";
+  // const bgPosition =
+  //   section === 1 ? "top" : section === 2 ? "center" : "bottom";
+
+  const HoverButton = () => {
+    return (
+      <a href="/umkm" className="btn">
+        <span>Lihat UMKM</span>
+        <svg width="13px" height="10px" viewBox="0 0 13 18">
+          <path d="M1,5 L11,5"></path>
+          <polyline points="8 1 12 5 8 9" />
+        </svg>
+      </a>
+    );
+  };
 
   return (
-    <div
-      className="relative w-full text-white transition-all duration-700 ease-in-out"
-      style={{
-        backgroundImage: "url('/images/about-us.jpg')",
-        backgroundSize: "cover",
-        backgroundAttachment: "fixed",
-        backgroundPosition: bgPosition,
-      }}
-    >
-      <div className="relative z-10 flex flex-col">
-        {/* Section 1 */}
-        <FadeSection index={1} direction={scrollDir}>
-          <img
-            src="/images/about1.png"
-            alt="About Ecosrot"
-            className="mx-auto"
-          />
-        </FadeSection>
+    <div>
+      <Parallax pages={2} ref={ref}>
+        <ParallaxLayer
+          offset={1.3}
+          speed={0.3}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            scale: "1.7",
+            zIndex: 9999, 
+            pointerEvents: "auto",
+          }}
+        >
+          <HoverButton />
+        </ParallaxLayer>
 
-        {/* Section 2 */}
-        <FadeSection index={2} direction={scrollDir}>
-          <img
-            src="/images/about2.png"
-            alt="Ecosrot Vision"
-            className="max-w-lg mx-auto"
-          />
-        </FadeSection>
-
-        {/* Section 3 */}
-        <FadeSection index={3} direction={scrollDir}>
-          <img
-            src="/images/about2.png"
-            alt="Ecosrot Mission"
-            className="max-w-lg mx-auto"
-          />
-          <p className="text-2xl leading-relaxed max-w-3xl mx-auto mt-6">
-            Menjadi wadah bagi pelaku UMKM ramah lingkungan untuk memperkenalkan
-            produk dan usahanya kepada masyarakat luas.
-          </p>
-        </FadeSection>
-
-        {/* 🟢 Section 4 — penutup kecil */}
-        <FadeSection index={4} direction={scrollDir}>
-          <div className="flex flex-col items-center justify-center">
-            <p className="text-3xl font-semibold mb-4">
-              Siap mengenal pelaku UMKM kami?
-            </p>
-            <p className="text-lg text-white/80">
-              Gulir sedikit lagi untuk melanjutkan ke halaman UMKM →
-            </p>
-          </div>
-        </FadeSection>
-      </div>
+        {/* <ParallaxLayer
+          offset={0}
+          speed={2}
+          factor={4}
+          style={{
+            backgroundImage: "url(/images/about_us.png)",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            transform: "scale(1.2)",
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
+          }}
+        ></ParallaxLayer>
+        <ParallaxLayer
+          offset={0}
+          speed={0.2}
+          style={{
+            backgroundImage: "url(/images/about1rev.png)",
+            backgroundPosition: "center",
+            scale: "1",
+            pointerEvents: "none",
+          }}
+        ></ParallaxLayer>
+        <ParallaxLayer
+          offset={0.6}
+          speed={0.4}
+          style={{
+            backgroundImage: "url(/images/about2.png)",
+            backgroundPosition: "center",
+            pointerEvents: "none",
+          }}
+          sticky={{ start: 0.6, end: 0.8 }}
+        ></ParallaxLayer>
+        <ParallaxLayer
+          offset={1.1}
+          speed={0.2}
+          onClick={() => router.push("/umkm")}
+          style={{
+            backgroundImage: "url(/images/about3.png)",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            pointerEvents: "none",
+          }}
+        /> */}
+        {/* <ParallaxLayer
+          offset={1.8}
+          speed={0.3}
+          factor={0.2}
+          className="gradient-anim"
+          style={{
+            backgroundBlendMode: "overlay",
+            opacity: 0.8,
+          }}
+        ></ParallaxLayer> */}
+      </Parallax>
     </div>
   );
 }
@@ -149,16 +185,16 @@ function FadeSection({
     },
   };
 
-  return (
-    <motion.section
-      ref={ref}
-      initial="hidden"
-      animate={controls}
-      variants={variants}
-      className="flex flex-col items-center justify-center text-center h-screen px-6"
-      style={{ minHeight: "100vh" }}
-    >
-      {children}
-    </motion.section>
-  );
+  // return (
+  //   <motion.section
+  //     ref={ref}
+  //     initial="hidden"
+  //     animate={controls}
+  //     variants={variants}
+  //     className="flex flex-col items-center justify-center text-center h-screen px-6"
+  //     style={{ minHeight: "100vh" }}
+  //   >
+  //     {children}
+  //   </motion.section>
+  // );
 }
