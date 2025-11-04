@@ -151,7 +151,7 @@ export default function TentangKami() {
           speed={2}
           factor={4}
           style={{
-            backgroundImage: "url(/images/about_us.png)",
+            backgroundImage: "url(/images/gunung2.png)",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
             backgroundSize: "cover",
