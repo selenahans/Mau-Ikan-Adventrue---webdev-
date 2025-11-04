@@ -148,6 +148,22 @@ export default function TentangKami() {
 
         <ParallaxLayer
           offset={0}
+          speed={1.5} // higher = moves down faster with scroll
+          factor={2}
+          style={{
+            backgroundImage: "url(/images/langit.png)",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center top",
+            backgroundSize: "cover",
+            transform: "scale(1.2)",
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
+          }}
+        ></ParallaxLayer>
+
+        {/* <ParallaxLayer
+          offset={0}
           speed={2}
           factor={4}
           style={{
@@ -160,7 +176,35 @@ export default function TentangKami() {
             height: "100%",
             pointerEvents: "none",
           }}
+        ></ParallaxLayer> */}
+        <ParallaxLayer
+          offset={0}
+          speed={0.2}
+          factor={2}
+          style={{
+            backgroundImage: "url(/images/gunung_sj.png)",
+            backgroundRepeat: "no-repeat",
+            transform: "scale(1)",
+            width: "100%",
+            pointerEvents: "none",
+            backgroundPosition: "center 250px"
+          }}
         ></ParallaxLayer>
+        <ParallaxLayer
+          offset={0}
+          speed={0.5}
+          factor={2}
+          style={{
+            backgroundImage: "url(/images/gunung_sj.png)",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center 350px", // push image down by 150px
+            backgroundSize: "110%",
+            transform: "scaleX(-1)",
+            width: "100%",
+            pointerEvents: "none",
+          }}
+        ></ParallaxLayer>
+
         <ParallaxLayer
           offset={0}
           speed={0.2}
