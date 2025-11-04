@@ -11,7 +11,7 @@ export default function TentangKami() {
   const [section, setSection] = useState(1);
   const [scrollDir, setScrollDir] = useState<"up" | "down">("down");
   const router = useRouter();
-  const ref = useRef(null);
+  const ref = useRef<any>(null);
 
   // // deteksi arah scroll
   // useEffect(() => {
@@ -71,37 +71,62 @@ export default function TentangKami() {
     );
   };
 
+  useEffect(() => {
+    let position = 0;
+    let paused = false;
+    const interval = setInterval(() => {
+      if (!ref.current || paused) return;
+      if (position === 0) {
+        position += 0.5;
+        ref.current.scrollTo(position);
+      }
+      if (position === 0.5) {
+        paused = true;
+        setTimeout(() => {
+          paused = false;
+          position += 0.5;
+          ref.current.scrollTo(position);
+        }, 2000); // delay 1s
+      }
+      // if (position > 2) position = 0; // loop back
+    }, 1000); // scroll interval
+    return () => clearInterval(interval);
+  }, []);
+
   const [isHovered, setIsHovered] = useState(false);
 
   const HoverLogo = () => {
-  const [isHovered, setIsHovered] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
 
-  return (
-    <div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{
-        width: "40%",
-        height: "auto",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <img
-        src={isHovered ? "/images/about2gif.gif" : "/images/about2.png"}
-        alt="About"
+    return (
+      <div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         style={{
-          width: "100%",
+          width: "40%",
           height: "auto",
-          objectFit: "contain",
-          transition: "opacity 0.3s ease",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundImage: "url(/images/aboutblur.png)",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "105%",
+          backgroundPosition: "center",
         }}
-      />
-    </div>
-  );
-};
-
+      >
+        <img
+          src={isHovered ? "/images/gifdoangfix.gif" : "/images/logointro.png"}
+          alt="About"
+          style={{
+            width: "100%",
+            height: "auto",
+            objectFit: "contain",
+            transition: "opacity 0.3s ease",
+          }}
+        />
+      </div>
+    );
+  };
 
   return (
     <div>
