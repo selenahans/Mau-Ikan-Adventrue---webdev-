@@ -77,10 +77,10 @@ export default function TentangKami() {
     const interval = setInterval(() => {
       if (!ref.current || paused) return;
       if (position === 0) {
-        position += 0.5;
+        position += 0.6;
         ref.current.scrollTo(position);
       }
-      if (position === 0.5) {
+      if (position === 0.6) {
         paused = true;
         setTimeout(() => {
           paused = false;
@@ -148,19 +148,29 @@ export default function TentangKami() {
 
         <ParallaxLayer
           offset={0}
-          speed={1.5} // higher = moves down faster with scroll
+          speed={1}
           factor={2}
           style={{
-            backgroundImage: "url(/images/langit.png)",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center top",
-            backgroundSize: "cover",
-            transform: "scale(1.2)",
             width: "100%",
             height: "100%",
+            overflow: "hidden",
             pointerEvents: "none",
           }}
-        ></ParallaxLayer>
+        >
+          <video
+            src="/videos/video_langit.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transform: "scale(1.2)",
+            }}
+          />
+        </ParallaxLayer>
 
         {/* <ParallaxLayer
           offset={0}
@@ -179,29 +189,25 @@ export default function TentangKami() {
         ></ParallaxLayer> */}
         <ParallaxLayer
           offset={0}
-          speed={0.2}
-          factor={2}
+          speed={0.1}
+          factor={4}
           style={{
-            backgroundImage: "url(/images/gunung_sj.png)",
-            backgroundRepeat: "no-repeat",
-            transform: "scale(1)",
-            width: "100%",
+            backgroundImage: "url(/images/gunung_flipped.png)",
+            backgroundPosition: "center 250px",
             pointerEvents: "none",
-            backgroundPosition: "center 250px"
+            backgroundSize: "110%",
           }}
         ></ParallaxLayer>
+
         <ParallaxLayer
           offset={0}
           speed={0.5}
-          factor={2}
+          factor={4}
           style={{
             backgroundImage: "url(/images/gunung_sj.png)",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center 350px", // push image down by 150px
-            backgroundSize: "110%",
-            transform: "scaleX(-1)",
-            width: "100%",
+            backgroundPosition: "center 350px",
             pointerEvents: "none",
+            backgroundSize: "130%",
           }}
         ></ParallaxLayer>
 
