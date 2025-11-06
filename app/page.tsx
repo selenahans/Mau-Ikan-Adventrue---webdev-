@@ -6,11 +6,9 @@ import { useInView } from "react-intersection-observer";
 import { useRouter } from "next/navigation";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import "./HoverButton.css";
+import "./introcss.css"
 
 export default function TentangKami() {
-  const [section, setSection] = useState(1);
-  const [scrollDir, setScrollDir] = useState<"up" | "down">("down");
-  const router = useRouter();
   const ref = useRef<any>(null);
 
   // // deteksi arah scroll
@@ -116,7 +114,6 @@ export default function TentangKami() {
       >
         <img
           src={isHovered ? "/images/gifdoangfix.gif" : "/images/logointro.png"}
-          alt="About"
           style={{
             width: "100%",
             height: "auto",
@@ -139,7 +136,7 @@ export default function TentangKami() {
             justifyContent: "center",
             alignItems: "center",
             scale: "100%",
-            zIndex: 9999,
+            zIndex: 1,
             pointerEvents: "auto",
           }}
         >
@@ -158,7 +155,7 @@ export default function TentangKami() {
           }}
         >
           <video
-            src="/videos/video_langit.mp4"
+            src="/videos/langit_ges.mp4"
             autoPlay
             loop
             muted
@@ -192,10 +189,11 @@ export default function TentangKami() {
           speed={0.1}
           factor={4}
           style={{
-            backgroundImage: "url(/images/gunung_flipped.png)",
+            backgroundImage: "url(/images/gunung_flipped_new.png)",
             backgroundPosition: "center 250px",
             pointerEvents: "none",
             backgroundSize: "110%",
+            height: "100%",
           }}
         ></ParallaxLayer>
 
@@ -204,7 +202,7 @@ export default function TentangKami() {
           speed={0.5}
           factor={4}
           style={{
-            backgroundImage: "url(/images/gunung_sj.png)",
+            backgroundImage: "url(/images/gunung_sj_new.png)",
             backgroundPosition: "center 350px",
             pointerEvents: "none",
             backgroundSize: "130%",
@@ -275,39 +273,39 @@ export default function TentangKami() {
 }
 
 /* 🎞️ Komponen Section dengan animasi dua arah */
-function FadeSection({
-  children,
-  index,
-  direction,
-}: {
-  children: React.ReactNode;
-  index: number;
-  direction: "up" | "down";
-}) {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.4 });
+// function FadeSection({
+//   children,
+//   index,
+//   direction,
+// }: {
+//   children: React.ReactNode;
+//   index: number;
+//   direction: "up" | "down";
+// }) {
+//   const controls = useAnimation();
+//   const [ref, inView] = useInView({ threshold: 0.4 });
 
-  useEffect(() => {
-    if (inView) controls.start("visible");
-    else controls.start("exit");
-  }, [inView, controls]);
+//   useEffect(() => {
+//     if (inView) controls.start("visible");
+//     else controls.start("exit");
+//   }, [inView, controls]);
 
-  const variants: Variants = {
-    hidden: {
-      opacity: 0,
-      y: direction === "down" ? 80 : -80,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
-    },
-    exit: {
-      opacity: 0,
-      y: direction === "down" ? -80 : 80,
-      transition: { duration: 0.8, ease: "easeInOut" },
-    },
-  };
+//   const variants: Variants = {
+//     hidden: {
+//       opacity: 0,
+//       y: direction === "down" ? 80 : -80,
+//     },
+//     visible: {
+//       opacity: 1,
+//       y: 0,
+//       transition: { duration: 0.8, ease: "easeOut" },
+//     },
+//     exit: {
+//       opacity: 0,
+//       y: direction === "down" ? -80 : 80,
+//       transition: { duration: 0.8, ease: "easeInOut" },
+//     },
+//   };
 
   // return (
   //   <motion.section
@@ -321,4 +319,4 @@ function FadeSection({
   //     {children}
   //   </motion.section>
   // );
-}
+//}
