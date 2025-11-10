@@ -58,9 +58,10 @@ export default function UmkmDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 relative overflow-hidden pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 relative overflow-hidden pb-20 mt-20">
+      
       {/* 🟢 Sub Navbar */}
-      <div className="sticky top-0 bg-white/80 backdrop-blur-md border-b z-40 shadow-sm">
+      <div className="sticky top-0 bg-white/80 backdrop-blur-md border-b z-40 shadow-sm ">
         <div className="max-w-6xl mx-auto flex justify-center flex-wrap gap-6 py-3">
           {subnavItems.map((item) => (
             <button
@@ -148,13 +149,13 @@ export default function UmkmDetailPage() {
       {/* 🟢 Produk */}
       <section
         id="produk"
-        className="max-w-6xl mx-auto mt-12 px-6 py-8 bg-white rounded-2xl shadow-md border border-gray-100"
+        className="max-w-6xl mx-auto mt-12 px-6 py-10 bg-white rounded-2xl shadow-md border border-gray-100"
       >
-        <h2 className="text-2xl font-bold text-green-800 mb-4 text-center">
-          Produk
+        <h2 className="text-3xl font-bold text-green-800 mb-8 text-center">
+          Produk Unggulan
         </h2>
 
-        <div className="flex flex-wrap justify-center text-sm text-gray-600 gap-6 mb-6">
+        <div className="flex flex-wrap justify-center text-sm text-gray-600 gap-6 mb-8">
           <span>
             <strong>Total Produk:</strong> {products.length || 0}
           </span>
@@ -173,31 +174,44 @@ export default function UmkmDetailPage() {
         </div>
 
         {products.length === 0 ? (
-          <p className="text-center text-gray-500">Belum ada produk.</p>
+          <p className="text-center text-gray-500 text-lg">Belum ada produk.</p>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {products.map((p: any) => (
-              <div
+              <a
                 key={p.id}
-                className="group border border-gray-100 rounded-xl p-3 shadow-sm hover:shadow-lg hover:border-green-200 transition-all bg-white"
+                href={`/umkm/${umkm.id}/${p.id}`}
+                className="group relative bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
               >
-                <Image
-                  src={p.image_url || "/images/placeholder-product.webp"}
-                  alt={p.nama_produk}
-                  width={200}
-                  height={200}
-                  className="rounded-md object-cover w-full h-40 group-hover:scale-[1.02] transition-transform"
-                />
-                <h3 className="font-semibold mt-3 text-center text-gray-800">
-                  {p.nama_produk}
-                </h3>
-                <p className="text-green-600 font-medium text-center">
-                  Rp {p.harga?.toLocaleString("id-ID")}
-                </p>
-                <p className="text-sm text-gray-500 line-clamp-2 text-center">
-                  {p.description}
-                </p>
-              </div>
+                {/* Gambar */}
+                <div className="relative w-full aspect-square overflow-hidden">
+                  <Image
+                    src={p.image_url || "/images/placeholder-product.webp"}
+                    alt={p.nama_produk}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                </div>
+
+                {/* Info Produk */}
+                <div className="p-4 text-center">
+                  <h3 className="font-semibold text-gray-800 text-lg line-clamp-1 mb-1">
+                    {p.nama_produk}
+                  </h3>
+                  <p className="text-green-700 font-bold text-sm mb-2">
+                    Rp {p.harga?.toLocaleString("id-ID")}
+                  </p>
+                  <p className="text-sm text-gray-500 line-clamp-2 h-[40px]">
+                    {p.description || "Tidak ada deskripsi produk."}
+                  </p>
+                </div>
+
+                {/* Hover effect text */}
+                <div className="absolute inset-0 flex items-center justify-center bg-green-700/70 text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  Lihat Detail
+                </div>
+              </a>
             ))}
           </div>
         )}
