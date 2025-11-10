@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Search, Sparkles, TrendingUp, Award } from "lucide-react";
+import Link from "next/link";
 
 interface Umkm {
   id: number;
@@ -159,12 +160,15 @@ export default function UmkmPage() {
                     {umkm.description}
                   </p>
 
-                  <button className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white py-3.5 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                  <Link
+                    href={`/umkm/${umkm.id}`}
+                    className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white py-3.5 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                  >
                     <span>Lihat Detail</span>
                     <span className="group-hover:translate-x-1 transition-transform">
                       →
                     </span>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

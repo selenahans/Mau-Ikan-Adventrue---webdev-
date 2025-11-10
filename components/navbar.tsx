@@ -14,24 +14,6 @@ export default function Navbar() {
     { href: "/umkm", label: "UMKM" },
   ];
 
-  // 🌿 Navbar minimal di halaman /aboutus
-  // if (pathname === "/gaadacik") {
-  //   return (
-  //     <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-gradient-to-b from-teal-900/50 via-teal-800/30 to-transparent">
-  //       <div className="max-w-7xl mx-auto flex items-center justify-center py-4">
-  //         <Link href="/" className="flex items-center gap-2 group">
-  //           <img
-  //             src="/images/logo.png"
-  //             alt="Ecosrot Logo"
-  //             className="h-16 transition-transform duration-300 group-hover:scale-105"
-  //           />
-  //         </Link>
-  //       </div>
-  //     </nav>
-  //   );
-  // }
-
-  // 🌿 Default Navbar (halaman selain /aboutus)
   if (pathname !== "/") {
     return (
       <nav
@@ -54,7 +36,9 @@ export default function Navbar() {
           {/* 🟢 Menu Navigasi */}
           <div className="hidden md:flex items-center gap-10 font-medium">
             {navItems.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive =
+                pathname === item.href ||
+                (item.href !== "/" && pathname.startsWith(item.href));
               return (
                 <Link
                   key={item.href}

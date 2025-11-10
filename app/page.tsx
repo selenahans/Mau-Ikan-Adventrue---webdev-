@@ -6,7 +6,6 @@ import { useInView } from "react-intersection-observer";
 import { useRouter } from "next/navigation";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import "./HoverButton.css";
-import "./introcss.css"
 
 export default function TentangKami() {
   const ref = useRef<any>(null);
@@ -307,16 +306,16 @@ export default function TentangKami() {
 //     },
 //   };
 
-  // return (
-  //   <motion.section
-  //     ref={ref}
-  //     initial="hidden"
-  //     animate={controls}
-  //     variants={variants}
-  //     className="flex flex-col items-center justify-center text-center h-screen px-6"
-  //     style={{ minHeight: "100vh" }}
-  //   >
-  //     {children}
-  //   </motion.section>
-  // );
+// return (
+//   <motion.section
+//     ref={ref}
+//     initial="hidden"
+//     animate={controls}
+//     variants={variants}
+//     className="flex flex-col items-center justify-center text-center h-screen px-6"
+//     style={{ minHeight: "100vh" }}
+//   >
+//     {children}
+//   </motion.section>
+// );
 //}
