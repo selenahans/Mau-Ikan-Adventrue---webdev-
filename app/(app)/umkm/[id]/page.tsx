@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
+import { Instagram, Phone } from "lucide-react";
 
 export default function UmkmDetailPage() {
   const { id } = useParams();
@@ -236,22 +237,80 @@ export default function UmkmDetailPage() {
         <h2 className="text-xl font-semibold mb-3 text-green-800 text-center">
           Lokasi
         </h2>
-        <p className="text-gray-600 text-center">
+
+        {/* Alamat */}
+        <p className="text-gray-600 text-center mb-4">
           {umkm.alamat || "Alamat belum tersedia"}
         </p>
+
+        {/* Peta */}
+        {umkm.gmaps_url ? (
+          <div
+            className="w-full h-[400px] rounded-lg overflow-hidden"
+            dangerouslySetInnerHTML={{ __html: umkm.gmaps_url }}
+          />
+        ) : (
+          <p className="text-center text-gray-500">
+            Lokasi belum tersedia untuk UMKM ini.
+          </p>
+        )}
       </section>
 
       {/* 🟢 Kontak */}
       <section
         id="kontak"
-        className="max-w-5xl mx-auto mt-10 mb-16 p-6 bg-white shadow rounded-xl"
+        className="max-w-5xl mx-auto mt-10 mb-16 p-8 bg-white shadow rounded-xl"
       >
-        <h2 className="text-xl font-semibold mb-3 text-green-800 text-center">
-          Kontak
+        <h2 className="text-2xl font-bold mb-6 text-green-800 text-center">
+          Kontak Kami
         </h2>
-        <div className="text-center space-y-1">
-          <p className="text-gray-700">Email: {umkm.email || "-"}</p>
-          <p className="text-gray-700">Nomor: {umkm.nomer || "-"}</p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center">
+          {/* WhatsApp */}
+          <div className="border border-green-700 bg-green-50 rounded-lg p-6 w-64 flex flex-col items-center justify-between shadow-sm hover:shadow-md transition">
+            <div className="flex flex-col items-center">
+              {/* Ikon WhatsApp */}
+              <Phone className="text-green-700 w-8 h-8 mb-2" />
+              <h3 className="font-semibold text-green-800">WhatsApp</h3>
+              <p className="text-sm text-gray-600">
+                {umkm.nomer || "Nomor belum tersedia"}
+              </p>
+            </div>
+
+            {umkm.nomer && (
+              <a
+                href={`https://wa.me/${umkm.nomer.replace(/\D/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 px-4 py-1.5 text-green-700 border border-green-700 rounded-md text-sm hover:bg-green-700 hover:text-white transition"
+              >
+                Hubungi Kami
+              </a>
+            )}
+          </div>
+
+          {/* Instagram */}
+          <div className="border border-green-700 bg-green-50 rounded-lg p-6 w-64 flex flex-col items-center justify-between shadow-sm hover:shadow-md transition">
+            <div className="flex flex-col items-center">
+              {/* Ikon Instagram */}
+              <Instagram className="text-green-700 w-8 h-8 mb-2" />
+              <h3 className="font-semibold text-green-800">Instagram</h3>
+              <p className="text-sm text-gray-600">
+                @{umkm.akun_toko || "Akun belum tersedia"}
+              </p>
+            </div>
+
+            {umkm.akun_toko && (
+              <a
+                href={`https://instagram.com/${umkm.akun_toko}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 px-4 py-1.5 text-green-700 border border-green-700 rounded-md text-sm hover:bg-green-700 hover:text-white transition"
+              >
+                Hubungi Kami
+              </a>
+            )}
+          </div>
         </div>
       </section>
     </div>
