@@ -15,6 +15,8 @@ export default function Navbar() {
   const navItems = [
     { href: "/aboutus", label: "Tentang Kami" },
     { href: "/umkm", label: "UMKM" },
+    { href: "/produk", label: "Produk" },
+    { href: "/edukasi", label: "Edukasi" },
   ];
 
   // 🔹 Cek session user saat halaman dimuat
@@ -49,14 +51,16 @@ export default function Navbar() {
     return (
       <nav
         className="
-        fixed top-0 left-0 w-full z-50
-        bg-white/70 backdrop-blur-md shadow-sm
-        transition-all duration-300
-      "
+  fixed top-5 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50
+  bg-white shadow-sm rounded-2xl
+  transition-all duration-300
+"
+
+
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-3">
+        <div className="max-w-7xl mx-auto flex items-center px-8 py-3">
           {/* 🟢 Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-2 group mr-8">
             <img
               src="/images/logo2.png"
               alt="Ecosrot Logo"
@@ -78,14 +82,14 @@ export default function Navbar() {
                     relative text-[16px] font-semibold transition duration-300
                     ${
                       isActive
-                        ? "text-teal-700"
-                        : "text-gray-700 hover:text-teal-700"
+                        ? "text-[#74C365]-700"
+                        : "text-gray-700 hover:text-[#74C365]"
                     }
                   `}
                 >
                   {item.label}
                   <span
-                    className={`absolute left-0 -bottom-1 h-[2px] w-full bg-gradient-to-r from-[#01814E] to-[#1F4993] transform transition-transform duration-300 ${
+                    className={`absolute left-0 -bottom-1 h-[2px] w-full bg-gradient-to-r from-[#00804c] to-[#74C365] transform transition-transform duration-300 ${
                       isActive
                         ? "scale-x-100"
                         : "scale-x-0 group-hover:scale-x-100"
@@ -97,13 +101,13 @@ export default function Navbar() {
           </div>
 
           {/* 🟢 Kanan: Auth */}
-          <div className="flex items-center gap-4 relative">
+          <div className="flex items-center gap-4 relative ml-auto">
             {!user ? (
               <>
                 {/* Tombol Masuk */}
                 <Link
                   href="/login"
-                  className="border border-teal-600 text-teal-700 font-medium
+                  className="border border-[#00804c] text-[#00804c] font-medium
                     px-4 py-1.5 rounded-full
                     hover:bg-teal-50 hover:shadow-sm
                     transition-all duration-300"
@@ -114,7 +118,7 @@ export default function Navbar() {
                 {/* Tombol Daftar */}
                 <Link
                   href="/register"
-                  className="bg-gradient-to-r from-[#01814E] to-[#1F4993]
+                  className="bg-gradient-to-r from-[#00804c] to-[#74C365]
                     px-5 py-1.5 rounded-full font-semibold
                     text-white shadow-md
                     hover:shadow-lg hover:brightness-110
