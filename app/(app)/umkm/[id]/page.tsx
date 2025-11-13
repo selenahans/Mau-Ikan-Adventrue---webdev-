@@ -43,7 +43,6 @@ export default function UmkmDetailPage() {
     { id: "deskripsi", label: "Deskripsi" },
     { id: "produk", label: "Produk" },
     { id: "ulasan", label: "Ulasan" },
-    { id: "galeri", label: "Galeri" },
     { id: "lokasi", label: "Lokasi" },
     { id: "kontak", label: "Kontak" },
   ];
@@ -58,53 +57,80 @@ export default function UmkmDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 relative overflow-hidden pb-20 mt-20">
-      
+    <div className="min-h-screen bg-[#F6F7ED] relative overflow-hidden">
+      <div
+        className="absolute top-0 -left-30 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
+        style={{ animationDuration: "6s", animationDelay: "2s" }}
+      />
+      <div
+        className="absolute -top-40 left-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
+        style={{ animationDuration: "6s", animationDelay: "3s" }}
+      />
+      <div
+        className="absolute -top-40 right-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
+        style={{ animationDuration: "6s", animationDelay: "1s" }}
+      />
+      <div
+        className="absolute -top-10 -right-40 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"
+        style={{ animationDuration: "6s", animationDelay: "2s" }}
+      />
       {/* 🟢 Sub Navbar */}
-      <div className="sticky top-0 bg-white/80 backdrop-blur-md border-b z-40 shadow-sm ">
-        <div className="max-w-6xl mx-auto flex justify-center flex-wrap gap-6 py-3">
-          {subnavItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-              className={`relative font-semibold text-sm tracking-wide transition-all duration-300 pb-1 ${
-                active === item.id
-                  ? "text-green-700 after:w-full"
-                  : "text-gray-500 hover:text-green-700 after:w-0"
-              } after:content-[''] after:absolute after:left-0 after:-bottom-[2px] after:h-[2px] after:bg-green-700 after:rounded-full after:transition-all after:duration-300`}
-            >
-              {item.label}
-            </button>
-          ))}
+      <header className="mt-30">
+        <div className="sticky top-0 z-40">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="h-16 flex items-center justify-center">
+              <nav className="hidden md:flex items-center gap-6 backdrop-blur-lg rounded-2xl px-4 py-2">
+                {subnavItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollTo(item.id)}
+                    className={`relative font-semibold text-lg tracking-wide transition-all duration-300 pb-1
+      ${active === item.id ? "text-[#00804c]" : "text-gray-400"}
+      after:content-[''] after:absolute after:left-0 after:-bottom-[2px] after:h-[2px]
+      after:bg-[#00804c] after:rounded-full after:transition-all after:duration-300 hover:text-[#74C365]
+      ${active === item.id ? "after:w-full" : ""}
+    `}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </nav>
+            </div>
+          </div>
         </div>
-      </div>
-
-      {/* 🟢 Header UMKM */}
-      <header className="text-center pt-16 pb-8">
-        <h1 className="text-4xl font-extrabold text-green-900 tracking-tight mb-2">
-          {umkm.name}
-        </h1>
-        <p className="text-gray-500 italic">
-          “When Perfumes Becomes Green Action”
-        </p>
       </header>
 
-      {/* 🟢 Profil */}
+      {/* 🟢 Header UMKM */}
+      <div className="mt-10 mb-5 relative w-48 aspect-square mx-auto rounded-full overflow-hidden shadow transition-all duration-300 hover:shadow-lg hover:scale-105">
+        <img
+          src={umkm.image_url || "/images/placeholder-product.png"}
+          alt={umkm.name}
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      <header className="text-center pt-2 pb-8">
+        <h1 className="text-5xl font-extrabold text-[#00804c] tracking-tight mb-2">
+          {umkm.name}
+        </h1>
+      </header>
+
+      {/* 🟢 Deskripsi */}
       <section
-        id="profil"
-        className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 px-6"
+        id="deskripsi"
+        className="max-w-6xl mx-auto grid md:grid-cols-[60%_40%] gap-8 px-6"
       >
-        <div className="bg-white shadow-lg rounded-2xl overflow-hidden border border-gray-100">
-          <Image
-            src={umkm.image_url || "/images/placeholder-product.png"}
-            alt={umkm.name}
-            width={600}
-            height={350}
-            className="object-cover w-full h-[260px]"
-          />
+        <div className="bg-white shadow-lg rounded-2xl overflow-hidden border border-gray-100 p-6 transition-all duration-300 hover:shadow-lg hover:scale-102">
+          <h2 className="text-2xl font-bold text-green-800 mb-4 text-center">
+            Deskripsi
+          </h2>
+          <p className="text-gray-700 leading-relaxed text-justify">
+            {umkm.description ||
+              "Belum ada deskripsi untuk UMKM ini. Data akan segera diperbarui."}
+          </p>
         </div>
 
-        <div className="bg-white shadow-lg rounded-2xl p-6 border border-gray-100">
+        <div className="bg-white shadow-lg rounded-2xl p-6 border border-gray-100 transition-all duration-300 hover:shadow-lg hover:scale-102">
           <div className="space-y-3 text-gray-700">
             <p>
               <span className="font-semibold text-green-700">
@@ -132,20 +158,6 @@ export default function UmkmDetailPage() {
         </div>
       </section>
 
-      {/* 🟢 Deskripsi */}
-      <section
-        id="deskripsi"
-        className="max-w-6xl mx-auto mt-12 px-6 py-8 bg-white rounded-2xl shadow-md border border-gray-100"
-      >
-        <h2 className="text-2xl font-bold text-green-800 mb-4 text-center">
-          Deskripsi
-        </h2>
-        <p className="text-gray-700 leading-relaxed text-justify">
-          {umkm.description ||
-            "Belum ada deskripsi untuk UMKM ini. Data akan segera diperbarui."}
-        </p>
-      </section>
-
       {/* 🟢 Produk */}
       <section
         id="produk"
@@ -171,6 +183,9 @@ export default function UmkmDetailPage() {
               ).toLocaleString("id-ID")}
             </span>
           )}
+          <p>
+            <strong>Kategori Produk:</strong> {umkm.Kategori_usaha}
+          </p>
         </div>
 
         {products.length === 0 ? (
@@ -220,37 +235,29 @@ export default function UmkmDetailPage() {
       {/* 🟢 Ulasan */}
       <section
         id="ulasan"
-        className="max-w-6xl mx-auto mt-12 px-6 py-8 bg-white rounded-2xl shadow-md border border-gray-100"
+        className="max-w-6xl mx-auto mt-12 px-6 py-6 bg-white rounded-2xl shadow-md border border-gray-100"
       >
         <UmkmRating umkmId={umkm.id} />
       </section>
 
-      {/* 🟢 Galeri */}
-      <section
-        id="galeri"
-        className="max-w-6xl mx-auto mt-12 px-6 py-8 bg-white rounded-2xl shadow-md border border-gray-100 text-center"
-      >
-        <h2 className="text-2xl font-bold mb-3 text-green-800">Galeri</h2>
-        <p className="text-gray-600">
-          Galeri foto akan segera tersedia untuk UMKM ini.
-        </p>
-      </section>
 
       {/* 🟢 Lokasi */}
       <section
         id="lokasi"
         className="max-w-6xl mx-auto mt-12 px-6 py-8 bg-white rounded-2xl shadow-md border border-gray-100 text-center"
       >
-        <h2 className="text-2xl font-bold mb-4 text-green-800">Lokasi</h2>
+        <h2 className="text-3xl font-bold mb-4 text-green-800">Lokasi</h2>
         <p className="text-gray-600 mb-4">
           {umkm.alamat || "Alamat belum tersedia"}
         </p>
 
         {umkm.gmaps_url ? (
-          <div
-            className="w-full h-[400px] rounded-lg overflow-hidden shadow-inner"
-            dangerouslySetInnerHTML={{ __html: umkm.gmaps_url }}
-          />
+          <div className="flex justify-center">
+            <div
+              className="rounded-lg overflow-hidden shadow-inner center"
+              dangerouslySetInnerHTML={{ __html: umkm.gmaps_url }}
+            />
+          </div>
         ) : (
           <p className="text-gray-500">Lokasi belum tersedia untuk UMKM ini.</p>
         )}
@@ -261,21 +268,21 @@ export default function UmkmDetailPage() {
         id="kontak"
         className="max-w-6xl mx-auto mt-12 px-6 py-10 bg-white rounded-2xl shadow-md border border-gray-100 text-center"
       >
-        <h2 className="text-2xl font-bold mb-6 text-green-800">Kontak</h2>
+        <h2 className="text-3xl font-bold mb-6 text-[#00804c]">Kontak</h2>
         <div className="flex flex-wrap justify-center gap-6">
           {/* WhatsApp */}
           <div className="w-64 border border-green-600 bg-green-50 rounded-xl p-6 flex flex-col items-center justify-between hover:shadow-lg transition-all">
             <Phone className="text-green-700 w-8 h-8 mb-2" />
-            <h3 className="font-semibold text-green-800">WhatsApp</h3>
+            <h3 className="font-semibold text-[#00804c]">WhatsApp</h3>
             <p className="text-sm text-gray-600">
-              {umkm.nomer || "Nomor belum tersedia"}
+              {umkm.nomer === "-" ? "Nomor belum tersedia" : umkm.nomer}
             </p>
-            {umkm.nomer && (
+            {umkm.nomer !== "-" && (
               <a
                 href={`https://wa.me/${umkm.nomer.replace(/\D/g, "")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 px-4 py-1.5 text-green-700 border border-green-700 rounded-md text-sm hover:bg-green-700 hover:text-white transition"
+                className="mt-3 px-4 py-1.5 text-[#00804c] border border-[#00804c] rounded-md text-sm hover:bg-[#00804c] hover:text-white transition"
               >
                 Hubungi Kami
               </a>
@@ -284,19 +291,49 @@ export default function UmkmDetailPage() {
 
           {/* Instagram */}
           <div className="w-64 border border-green-600 bg-green-50 rounded-xl p-6 flex flex-col items-center justify-between hover:shadow-lg transition-all">
-            <Instagram className="text-green-700 w-8 h-8 mb-2" />
-            <h3 className="font-semibold text-green-800">Instagram</h3>
+            <Instagram className="text-[#00804c] w-8 h-8 mb-2" />
+            <h3 className="font-semibold text-[#00804c]">Instagram</h3>
             <p className="text-sm text-gray-600">
-              @{umkm.akun_toko || "Akun belum tersedia"}
+              {umkm.akun_toko === "-" ? "Akun belum tersedia" : '@' + umkm.akun_toko}
             </p>
-            {umkm.akun_toko && (
+            {umkm.akun_toko !== "-" &&  (
               <a
                 href={`https://instagram.com/${umkm.akun_toko}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 px-4 py-1.5 text-green-700 border border-green-700 rounded-md text-sm hover:bg-green-700 hover:text-white transition"
+                className="mt-3 px-4 py-1.5 text-[#00804c] border border-[#00804c] rounded-md text-sm hover:bg-[#00804c] hover:text-white transition"
               >
                 Kunjungi Akun
+              </a>
+            )}
+          </div>
+
+          {/* Email */}
+          <div className="w-64 border border-green-600 bg-green-50 rounded-xl p-6 flex flex-col items-center justify-between hover:shadow-lg transition-all">
+            <svg
+              xmlns="https://www.iconpacks.net/icons/1/free-mail-icon-142-thumb.png"
+              className="w-8 h-8 text-[#00804c] mb-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M16 12H8m8-4H8m0 8h8m4 4H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2z"
+              />
+            </svg>
+            <h3 className="font-semibold text-[#00804c]">Email</h3>
+            <p className="text-sm text-gray-600">
+              {umkm.email === "-" ? "Email belum tersedia" : umkm.email}
+            </p>
+            {umkm.email !== "-" && (
+              <a
+                href={`mailto:${umkm.email}`}
+                className="mt-3 px-4 py-1.5 text-[#00804c] border border-[#00804c] rounded-md text-sm hover:bg-[#00804c] hover:text-white transition"
+              >
+                Kirim Email
               </a>
             )}
           </div>

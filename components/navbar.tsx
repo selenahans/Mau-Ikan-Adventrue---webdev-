@@ -131,7 +131,7 @@ export default function Navbar() {
               <div className="relative">
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center gap-2 border border-teal-600 text-teal-700 px-4 py-1.5 rounded-full font-medium hover:bg-teal-50 transition"
+                  className="flex items-center gap-2 border border-[#00804c] text-[#00804c] px-4 py-1.5 rounded-full font-medium hover: transition"
                 >
                   <span>Halo, {user.email}</span>
                   <ChevronDown

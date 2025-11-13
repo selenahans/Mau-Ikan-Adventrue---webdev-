@@ -80,11 +80,11 @@ export default function UlasanUmkm({ umkmId }: { umkmId: number }) {
   const visibleRatings = ratings.slice(0, 6);
 
   return (
-    <section className="max-w-6xl mx-auto mt-10 mb-16 bg-[#F8FAF7] rounded-xl p-8 shadow-sm relative">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-green-800">
+    <section className="max-w-6xl mx-auto rounded-xl p-6 relative">
+      <div className="flex justify-center items-center mb-6">
+        <h2 className="text-3xl font-bold text-[#00804c]">
           Ulasan{" "}
-          <span className="text-green-600">({ratings?.length ?? 0})</span>
+          <span>({ratings?.length ?? 0})</span>
         </h2>
         {ratings.length > 6 && (
           <button

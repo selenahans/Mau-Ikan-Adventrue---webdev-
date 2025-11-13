@@ -72,7 +72,7 @@ export default function UmkmPage() {
         <div className="flex justify-center items-center mb-16">
           <div className="relative w-full max-w-2xl">
             <div className="absolute inset-0 bg-gradient-to-r from-[#74C365] to-[#00804c] rounded-2xl blur opacity-20" />
-            <div className="relative bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 p-2">
+            <div className="relative bg-white backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 p-2">
               <div className="flex items-center gap-3">
                 <div className="pl-4">
                   <Search className="text-gray-800 w-6 h-6" />
@@ -99,19 +99,19 @@ export default function UmkmPage() {
 
         {/* Stats Bar */}
         <div className="max-w-4xl mx-auto mb-16 grid grid-cols-3 gap-4">
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 text-center border border-white/40 shadow-lg">
+          <div className="bg-white backdrop-blur-sm rounded-2xl p-4 text-center border border-white/40 shadow-lg">
             <TrendingUp className="w-6 h-6 text-[#00804c] mx-auto mb-2" />
             <p className="text-2xl font-bold text-gray-800">
               {filteredList.length}
             </p>
             <p className="text-sm text-gray-600">UMKM Tersedia</p>
           </div>
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 text-center border border-white/40 shadow-lg">
+          <div className="bg-white backdrop-blur-sm rounded-2xl p-4 text-center border border-white/40 shadow-lg">
             <Award className="w-6 h-6 text-[#00804c] mx-auto mb-2" />
             <p className="text-2xl font-bold text-gray-800">100%</p>
             <p className="text-sm text-gray-600">Eco-Friendly</p>
           </div>
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 text-center border border-white/40 shadow-lg">
+          <div className="bg-white backdrop-blur-sm rounded-2xl p-4 text-center border border-white/40 shadow-lg">
             <Sparkles className="w-6 h-6 text-[#00804c] mx-auto mb-2" />
             <p className="text-2xl font-bold text-gray-800">Lokal</p>
             <p className="text-sm text-gray-600">Produk Asli</p>

@@ -59,171 +59,200 @@ export default function ProductDetailPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 pt-16 pb-20">
-      {/* 🟢 Sub Navbar */}
-      <div className="sticky top-0 bg-white/80 backdrop-blur-md border-b z-40 shadow-sm">
-        <div className="max-w-6xl mx-auto flex justify-center flex-wrap gap-6 py-3">
-          {subnavItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-              className={`relative font-semibold text-sm tracking-wide transition-all duration-300 pb-1 ${
-                active === item.id
-                  ? "text-green-700 after:w-full"
-                  : "text-gray-500 hover:text-green-700 after:w-0"
-              } after:content-[''] after:absolute after:left-0 after:-bottom-[2px] after:h-[2px] after:bg-green-700 after:rounded-full after:transition-all after:duration-300`}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
+    <div className="min-h-screen bg-[#F6F7ED] relative overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <div
+          className="absolute top-0 -left-30 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
+          style={{ animationDuration: "6s", animationDelay: "2s" }}
+        />
+        <div
+          className="absolute -top-40 left-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
+          style={{ animationDuration: "6s", animationDelay: "3s" }}
+        />
+        <div
+          className="absolute -top-40 right-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
+          style={{ animationDuration: "6s", animationDelay: "1s" }}
+        />
+        <div
+          className="absolute -top-10 -right-40 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"
+          style={{ animationDuration: "6s", animationDelay: "2s" }}
+        />
       </div>
-
-      {/* 🟢 Header Produk */}
-      <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg border border-gray-100 p-8 mt-6">
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Gambar Produk */}
-          <div className="relative bg-gray-50 rounded-xl overflow-hidden border">
-            <Image
-              src={product.image_url || "/images/placeholder-product.webp"}
-              alt={product.nama_produk}
-              width={600}
-              height={600}
-              className="object-cover w-full h-[400px]"
-            />
+      <div className="relative z-10">
+        <header className="mt-30">
+          <div className="sticky top-0 z-40">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="h-16 flex items-center justify-center">
+                <nav className="hidden md:flex items-center gap-6 backdrop-blur-lg rounded-2xl px-4 py-2">
+                  {subnavItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollTo(item.id)}
+                      className={`relative font-semibold text-lg tracking-wide transition-all duration-300 pb-1
+      ${active === item.id ? "text-[#00804c]" : "text-gray-400"}
+      after:content-[''] after:absolute after:left-0 after:-bottom-[2px] after:h-[2px]
+      after:bg-[#00804c] after:rounded-full after:transition-all after:duration-300 hover:text-[#74C365]
+      ${active === item.id ? "after:w-full" : ""}
+    `}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </nav>
+              </div>
+            </div>
           </div>
+        </header>
 
-          {/* Info Produk */}
-          <div className="flex flex-col justify-between">
-            <div>
-              {/* Nama Produk */}
-              <h1 className="text-3xl font-bold text-green-900 mb-2 leading-snug">
-                {product.nama_produk}
-              </h1>
+        {/* 🟢 Header Produk */}
+        <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg border border-gray-100 p-8 mt-6">
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Gambar Produk */}
+            <div className="relative rounded-xl overflow-hidden border">
+              <Image
+                src={product.image_url || "/images/placeholder-product.webp"}
+                alt={product.nama_produk}
+                width={600}
+                height={600}
+                className="object-cover w-full h-[400px]"
+              />
+            </div>
 
-              {/* Harga */}
-              <p className="text-green-700 text-2xl font-semibold mb-3">
-                Rp {product.harga?.toLocaleString("id-ID")}
-              </p>
+            {/* Info Produk */}
+            <div className="flex flex-col justify-between">
+              <div>
+                {/* Nama Produk */}
+                <h1 className="text-3xl font-bold text-gray-800 mb-2 leading-snug">
+                  {product.nama_produk}
+                </h1>
 
-              {/* Rating Produk */}
-              <div className="flex items-center gap-2 mb-4">
-                {product.average_rating && product.total_reviews > 0 ? (
-                  <>
-                    <div className="flex text-yellow-400">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`w-5 h-5 ${
-                            i < Math.round(product.average_rating)
-                              ? "fill-yellow-400"
-                              : "fill-gray-200 text-gray-300"
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    <span className="text-gray-700 text-sm font-medium">
-                      {product.average_rating.toFixed(1)} / 5
+                {/* Harga */}
+                <p className="text-green-700 text-2xl font-semibold mb-3">
+                  Rp {product.harga?.toLocaleString("id-ID")}
+                </p>
+
+                {/* Rating Produk */}
+                <div className="flex items-center gap-2 mb-4">
+                  {product.average_rating && product.total_reviews > 0 ? (
+                    <>
+                      <div className="flex text-yellow-400">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`w-5 h-5 ${
+                              i < Math.round(product.average_rating)
+                                ? "fill-yellow-400"
+                                : "fill-gray-200 text-gray-300"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <span className="text-gray-700 text-sm font-medium">
+                        {product.average_rating.toFixed(1)} / 5
+                      </span>
+                      <span className="text-gray-500 text-sm">
+                        ({product.total_reviews} ulasan)
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-gray-500 text-sm italic">
+                      Belum ada ulasan
                     </span>
-                    <span className="text-gray-500 text-sm">
-                      ({product.total_reviews} ulasan)
-                    </span>
-                  </>
-                ) : (
-                  <span className="text-gray-500 text-sm italic">
-                    Belum ada ulasan
-                  </span>
-                )}
+                  )}
+                </div>
+
+                {/* Deskripsi Singkat (opsional ringkas) */}
+                <p className="text-gray-700 text-sm mb-4 line-clamp-3">
+                  {product.deskripsi ||
+                    "Deskripsi produk belum tersedia. Informasi akan segera diperbarui."}
+                </p>
               </div>
 
-              {/* Deskripsi Singkat (opsional ringkas) */}
-              <p className="text-gray-700 text-sm mb-4 line-clamp-3">
-                {product.deskripsi ||
-                  "Deskripsi produk belum tersedia. Informasi akan segera diperbarui."}
-              </p>
-            </div>
-
-            {/* Tombol Aksi */}
-            <div className="mt-4 flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={() =>
-                  document.getElementById("ulasan")?.scrollIntoView({
-                    behavior: "smooth",
-                  })
-                }
-                className="flex items-center justify-center gap-2 border border-green-700 text-green-700 hover:bg-green-50 rounded-md px-6 py-2 font-medium transition"
-              >
-                <Star className="w-4 h-4 text-green-700" />
-                Lihat Ulasan
-              </button>
+              {/* Tombol Aksi */}
+              <div className="mt-4 flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={() =>
+                    document.getElementById("ulasan")?.scrollIntoView({
+                      behavior: "smooth",
+                    })
+                  }
+                  className="group flex items-center justify-center gap-2 border border-[#00804c] text-[#00804c] hover:bg-[#00804c] hover:text-white rounded-md px-6 py-2 font-medium transition"
+                >
+                  <Star className="w-4 h-4 text-[#00804c] group-hover:text-white" />
+                  Lihat Ulasan
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* 🟢 Informasi Penting */}
-      <section
-        id="info"
-        className="max-w-6xl mx-auto mt-12 bg-white rounded-2xl shadow-md border border-gray-100 p-8"
-      >
-        <h2 className="text-2xl font-bold text-green-800 mb-4 text-center">
-          Informasi Penting
-        </h2>
-        <p className="text-gray-600 leading-relaxed text-justify">
-          {product.info_penting ||
-            "Informasi penting produk belum tersedia. Informasi akan segera diperbarui."}
-        </p>
-      </section>
-
-      {/* 🟢 Ulasan */}
-      <section
-        id="ulasan"
-        className="max-w-6xl mx-auto mt-12 bg-white rounded-2xl shadow-md border border-gray-100 p-8"
-      >
-        <UlasanProduk productId={Number(product_id)} />
-      </section>
-
-      {/* 🟢 Produk Lainnya */}
-      <section
-        id="lainnya"
-        className="max-w-6xl mx-auto mt-12 mb-20 bg-white rounded-2xl shadow-md border border-gray-100 p-8"
-      >
-        <h2 className="text-2xl font-bold text-green-800 mb-6 text-center">
-          Produk Lainnya
-        </h2>
-        {related.length === 0 ? (
-          <p className="text-gray-500 text-center">
-            Belum ada rekomendasi produk lainnya.
+        {/* 🟢 Informasi Penting */}
+        <section
+          id="info"
+          className="max-w-6xl mx-auto mt-12 bg-white rounded-2xl shadow-md border border-gray-100 p-8"
+        >
+          <h2 className="text-2xl font-bold text-green-800 mb-4 text-center">
+            Informasi Penting
+          </h2>
+          <p className="text-gray-600 leading-relaxed text-justify">
+            {product.info_penting ||
+              "Informasi penting produk belum tersedia. Informasi akan segera diperbarui."}
           </p>
-        ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {related.map((r: any) => (
-              <a
-                key={r.id}
-                href={`/umkm/${id}/${r.id}`}
-                className="group border border-gray-100 rounded-xl bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all overflow-hidden"
-              >
-                <div className="relative aspect-square overflow-hidden">
-                  <Image
-                    src={r.image_url || "/images/placeholder-product.webp"}
-                    alt={r.nama_produk}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform"
-                  />
-                </div>
-                <div className="p-3">
-                  <h3 className="font-semibold text-gray-800 text-sm line-clamp-1 mb-1">
-                    {r.nama_produk}
-                  </h3>
-                  <p className="text-green-700 font-bold text-sm">
-                    Rp {r.harga?.toLocaleString("id-ID")}
-                  </p>
-                </div>
-              </a>
-            ))}
-          </div>
-        )}
-      </section>
+        </section>
+
+        {/* 🟢 Ulasan */}
+        <section
+          id="ulasan"
+          className="max-w-6xl mx-auto mt-12 px-6 py-6 bg-white rounded-2xl shadow-md border border-gray-100"
+        >
+          <UlasanProduk productId={Number(product_id)} />
+        </section>
+
+        {/* 🟢 Produk Lainnya */}
+        <section
+          id="lainnya"
+          className="max-w-6xl mx-auto mt-12 mb-20 bg-white rounded-2xl shadow-md border border-gray-100 p-8"
+        >
+          <h2 className="text-2xl font-bold text-green-800 mb-6 text-center">
+            Produk Lainnya
+          </h2>
+          {related.length === 0 ? (
+            <p className="text-gray-500 text-center">
+              Belum ada rekomendasi produk lainnya.
+            </p>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {related.map((r: any) => (
+                <a
+                  key={r.id}
+                  href={`/umkm/${id}/${r.id}`}
+                  className="group border border-gray-100 rounded-xl bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all overflow-hidden"
+                >
+                  <div className="relative aspect-square overflow-hidden">
+                    <Image
+                      src={r.image_url || "/images/placeholder-product.webp"}
+                      alt={r.nama_produk}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform"
+                    />
+                  </div>
+                  <div className="p-3">
+                    <h3 className="font-semibold text-gray-800 text-sm line-clamp-1 mb-1">
+                      {r.nama_produk}
+                    </h3>
+                    <p className="text-green-700 font-bold text-sm">
+                      Rp {r.harga?.toLocaleString("id-ID")}
+                    </p>
+                  </div>
+                  <div className="absolute inset-0 flex items-center justify-center bg-green-700/70 text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    Lihat Detail
+                  </div>
+                </a>
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
     </div>
   );
 }
