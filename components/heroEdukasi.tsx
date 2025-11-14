@@ -9,9 +9,43 @@ export default function HeroCarousel() {
 
   // Your slide grouping (2 UMKM items per slide)
   const groupedSlides = [
-    [1, 2], // slide 1
-    [3, 4], // slide 2 (if needed add more)
-    [5, 6], // slide 3
+    [1], // slide 1
+    [2], // slide 2 (if needed add more)
+    [3],
+    [4] // slide 3
+  ];
+
+  const umkmData = [
+    {
+      judul:
+        "Dauroma, Parfum Ramah Lingkungan dari Limbah Kulit Buah Karya Mahasiswa Surabaya",
+      foto: "https://asset.kompas.com/crops/Gk9kNFeeTLjIE6mQooIa_sdWtVY=/0x122:4086x2846/1200x800/data/photo/2025/09/19/68ccf7fa0ef95.jpg",
+      tanggal: "19 September 2025",
+      sumber:
+        "https://surabaya.kompas.com/read/2025/09/19/150516078/dauroma-parfum-ramah-lingkungan-dari-limbah-kulit-buah-karya-mahasiswa?page=all",
+    },
+    {
+      judul:
+        "EANK Solo, UMKM Inovatif Asal Solo, Sulap Limbah PVC Jadi Sangkar Burung dan Akuarium Berkualitas Ekspor ke Asia Tenggara",
+      foto: "https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/84/2025/10/08/BRI-SANGKAR-2915072270.jpeg",
+      tanggal: "8 Oktober 2025",
+      sumber:
+        "https://radarsolo.jawapos.com/ekonomi/846676181/eank-solo-umkm-inovatif-asal-solo-sulap-limbah-pvc-jadi-sangkar-burung-dan-akuarium-berkualitas-ekspor-ke-asia-tenggara",
+    },
+    {
+      judul:
+        "C-Pop Watch: Jam Tangan Daur Ulang Mahasiswa ITS, Gaya Sekaligus Selamatkan Lingkungan",
+      foto: "https://klikku.id/wp-content/uploads/2025/10/IMG_20251016_155925-750x420.jpg",
+      tanggal: "16 Oktober 2025",
+      sumber:
+        "https://klikku.id/2025/10/16/c-pop-watch-jam-tangan-daur-ulang-mahasiswa-its-gaya-sekaligus-selamatkan-lingkungan/",
+    },
+    {
+      judul: "Kreskros, Sulap Plastik Kresek Jadi Kerajinan Bernilai Tinggi",
+      foto: "https://humas.jatengprov.go.id/foto/1558805370576-IMG-20190525-WA0048_detail.png",
+      tanggal: "25 May 2019",
+      sumber: "https://humas.jatengprov.go.id/detail_berita_gubernur?id=2775",
+    },
   ];
 
   const totalSlides = groupedSlides.length;
@@ -41,9 +75,11 @@ export default function HeroCarousel() {
 
   return (
     <div className="relative max-w-7xl mx-auto text-center select-none">
-
       {/* CAROUSEL */}
-      <div ref={scrollRef} className="relative mt-6 flex overflow-hidden w-full">
+      <div
+        ref={scrollRef}
+        className="relative mt-6 flex overflow-hidden w-full"
+      >
         {groupedSlides.map((slideItems, slideIndex) => (
           <div
             key={slideIndex}
@@ -92,26 +128,26 @@ export default function HeroCarousel() {
             )}
 
             {/* Slide Content — REPLACED with your UMKM layout */}
-            <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 px-4">
+            <div className="max-w-5xl items-center mx-auto gap-10 px-4">
               {slideItems.map((i) => (
                 <div
                   key={i}
-                  className="bg-white grid md:grid-cols-2 rounded-xl overflow-hidden shadow hover:shadow-xl transition"
+                  className="bg-white grid mt-6 md:grid-cols-2 rounded-xl p-6 overflow-hidden shadow transition-all duration-300 hover:shadow-lg hover:scale-105"
+                  onClick={() => window.open(umkmData[i - 1].sumber, "_blank")}
                 >
                   <Image
-                    src="/images/bgvisi.png"
+                    src={umkmData[i - 1].foto}
                     width={800}
                     height={500}
                     alt="umkm"
-                    className="w-full"
+                    className="w-full rounded-lg"
                   />
-                  <div className="p-6">
-                    <h3 className="font-semibold text-xl text-[#00804c]">
-                      UMKM Hijau {i}
+                  <div className="p-6 text-left">
+                    <h3 className="font-semibold text-lg text-[#00804c]">
+                      {umkmData[i - 1].judul}
                     </h3>
                     <p className="text-gray-600 text-sm mt-3">
-                      Kisah pelaku UMKM yang berhasil menerapkan praktik ramah
-                      lingkungan.
+                      {umkmData[i - 1].tanggal}
                     </p>
                   </div>
                 </div>

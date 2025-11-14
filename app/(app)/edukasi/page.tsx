@@ -184,20 +184,20 @@ const greenTips = [
           <div className="p-6">
             <img
               src="/images/edu1.png"
-              className="rounded-2xl shadow transition hover:shadow-xl hover:scale-105"
+              className="rounded-2xl shadow transition hover:shadow-xl hover:scale-110"
             />
           </div>
           <div>
             <div className="p-6">
               <img
                 src="/images/edu2.png"
-                className="rounded-2xl shadow transition hover:shadow-xl hover:scale-105"
+                className="rounded-2xl shadow transition hover:shadow-xl hover:scale-110"
               />
             </div>
             <div className="p-6">
               <img
                 src="/images/edu3.png"
-                className="rounded-2xl shadow transition hover:shadow-xl hover:scale-105"
+                className="rounded-2xl shadow transition hover:shadow-xl hover:scale-110"
               />
             </div>
           </div>
