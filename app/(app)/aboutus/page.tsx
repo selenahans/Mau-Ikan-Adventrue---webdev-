@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Menu, X, Leaf, Sparkles } from "lucide-react";
+import HeroCarousel from "@/components/heroAboutUs";
 
 type TabKey =
   | "deskripsi"
@@ -205,34 +206,7 @@ export default function ECOsrotLanding() {
       </header>
 
       {/* ======= Hero ======= */}
-      <div className="relative max-w-7xl mx-auto text-center">
-        <div className="flex justify-center">
-          <img
-            src="/images/gifhlmbgs.gif"
-            alt="Hero"
-            className="w-1/2 scale-75"
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-          {[
-            "https://images.pexels.com/photos/1656663/pexels-photo-1656663.jpeg",
-            "https://images.pexels.com/photos/1666021/pexels-photo-1666021.jpeg",
-            "https://images.pexels.com/photos/1158783/pexels-photo-1158783.jpeg",
-          ].map((img, idx) => (
-            <figure
-              key={idx}
-              className="group relative overflow-hidden rounded-3xl bg-white border border-white/60 shadow-md h-64 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 text-lg"
-            >
-              <img
-                src={img}
-                alt={`Hero ${idx + 1}`}
-                className="w-full h-full object-cover transition-transform duration-700 "
-              />
-              <figcaption className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity " />
-            </figure>
-          ))}
-        </div>
-      </div>
+      <HeroCarousel />
 
       {/* ======= Deskripsi ======= */}
       <section
@@ -478,33 +452,15 @@ export default function ECOsrotLanding() {
                 <p className="text-[#00804c]">Co-Founder & Production</p>
               </div>
             </div>
-              <div className="inline-block bg-[#74C365] backdrop-blur-sm rounded-2xl p-7 transition-all duration-300 hover:shadow-lg hover:scale-102">
-                <h3 className="text-xl md:text-2xl font-bold text-[#F6F7ED]">
-                  Aileen Joyce David
-                </h3>
-                <p className="text-[#00804c]">Founder</p>
-              </div>
+            <div className="inline-block bg-[#74C365] backdrop-blur-sm rounded-2xl p-7 transition-all duration-300 hover:shadow-lg hover:scale-102">
+              <h3 className="text-xl md:text-2xl font-bold text-[#F6F7ED]">
+                Aileen Joyce David
+              </h3>
+              <p className="text-[#00804c]">Founder</p>
             </div>
           </div>
-      </section>
-
-      {/* ======= Footer ======= */}
-      <footer className="bg-[#00804c] text-white py-12 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <Leaf className="w-7 h-7 color-[#F6F7ED]" />
-            <span className="text-2xl font-bold tracking-tight text-[#F6F7ED]">
-              ECOsrot
-            </span>
-          </div>
-          <p className="text-emerald-200">
-            Platform UMKM Ramah Lingkungan Indonesia
-          </p>
-          <p className="text-emerald-300 text-sm mt-1">
-            © 2025 ECOsrot. All rights reserved.
-          </p>
         </div>
-      </footer>
+      </section>
     </div>
   );
 }

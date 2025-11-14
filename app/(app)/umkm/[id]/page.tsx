@@ -19,7 +19,7 @@ export default function UmkmDetailPage() {
     });
   }, [id]);
 
-  // 🔹 Update tab aktif saat scroll
+  // highlight menu saat scroll
   useEffect(() => {
     const sections = document.querySelectorAll("section[id]");
     const observer = new IntersectionObserver(
@@ -58,23 +58,13 @@ export default function UmkmDetailPage() {
 
   return (
     <div className="min-h-screen bg-[#F6F7ED] relative overflow-hidden">
-      <div
-        className="absolute top-0 -left-30 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
-        style={{ animationDuration: "6s", animationDelay: "2s" }}
-      />
-      <div
-        className="absolute -top-40 left-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
-        style={{ animationDuration: "6s", animationDelay: "3s" }}
-      />
-      <div
-        className="absolute -top-40 right-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
-        style={{ animationDuration: "6s", animationDelay: "1s" }}
-      />
-      <div
-        className="absolute -top-10 -right-40 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"
-        style={{ animationDuration: "6s", animationDelay: "2s" }}
-      />
-      {/* 🟢 Sub Navbar */}
+      {/* background blur */}
+      <div className="absolute top-0 -left-30 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" />
+      <div className="absolute -top-40 left-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" />
+      <div className="absolute -top-40 right-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" />
+      <div className="absolute -top-10 -right-40 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
+
+      {/* Sub Navbar */}
       <header className="mt-30">
         <div className="sticky top-0 z-40">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,11 +75,11 @@ export default function UmkmDetailPage() {
                     key={item.id}
                     onClick={() => scrollTo(item.id)}
                     className={`relative font-semibold text-lg tracking-wide transition-all duration-300 pb-1
-      ${active === item.id ? "text-[#00804c]" : "text-gray-400"}
-      after:content-[''] after:absolute after:left-0 after:-bottom-[2px] after:h-[2px]
-      after:bg-[#00804c] after:rounded-full after:transition-all after:duration-300 hover:text-[#74C365]
-      ${active === item.id ? "after:w-full" : ""}
-    `}
+                    ${active === item.id ? "text-[#00804c]" : "text-gray-400"}
+                    after:content-[''] after:absolute after:left-0 after:-bottom-[2px] 
+                    after:h-[2px] after:bg-[#00804c] after:rounded-full after:transition-all
+                    ${active === item.id ? "after:w-full" : ""}
+                  `}
                   >
                     {item.label}
                   </button>
@@ -100,8 +90,8 @@ export default function UmkmDetailPage() {
         </div>
       </header>
 
-      {/* 🟢 Header UMKM */}
-      <div className="mt-10 mb-5 relative w-48 aspect-square mx-auto rounded-full overflow-hidden shadow transition-all duration-300 hover:shadow-lg hover:scale-105">
+      {/* Foto Profil UMKM */}
+      <div className="mt-10 mb-5 relative w-48 aspect-square mx-auto rounded-full overflow-hidden shadow hover:shadow-lg hover:scale-105 transition">
         <img
           src={umkm.image_url || "/images/placeholder-product.png"}
           alt={umkm.name}
@@ -115,12 +105,12 @@ export default function UmkmDetailPage() {
         </h1>
       </header>
 
-      {/* 🟢 Deskripsi */}
+      {/* Deskripsi */}
       <section
         id="deskripsi"
         className="max-w-6xl mx-auto grid md:grid-cols-[60%_40%] gap-8 px-6"
       >
-        <div className="bg-white shadow-lg rounded-2xl overflow-hidden border border-gray-100 p-6 transition-all duration-300 hover:shadow-lg hover:scale-102">
+        <div className="bg-white shadow-lg rounded-2xl overflow-hidden border p-6 hover:shadow-lg transition">
           <h2 className="text-2xl font-bold text-green-800 mb-4 text-center">
             Deskripsi
           </h2>
@@ -130,7 +120,7 @@ export default function UmkmDetailPage() {
           </p>
         </div>
 
-        <div className="bg-white shadow-lg rounded-2xl p-6 border border-gray-100 transition-all duration-300 hover:shadow-lg hover:scale-102">
+        <div className="bg-white shadow-lg rounded-2xl p-6 border hover:shadow-lg transition">
           <div className="space-y-3 text-gray-700">
             <p>
               <span className="font-semibold text-green-700">
@@ -158,10 +148,10 @@ export default function UmkmDetailPage() {
         </div>
       </section>
 
-      {/* 🟢 Produk */}
+      {/* Produk */}
       <section
         id="produk"
-        className="max-w-6xl mx-auto mt-12 px-6 py-10 bg-white rounded-2xl shadow-md border border-gray-100"
+        className="max-w-6xl mx-auto mt-12 px-6 py-10 bg-white rounded-2xl shadow-md border"
       >
         <h2 className="text-3xl font-bold text-green-800 mb-8 text-center">
           Produk Unggulan
@@ -169,173 +159,122 @@ export default function UmkmDetailPage() {
 
         <div className="flex flex-wrap justify-center text-sm text-gray-600 gap-6 mb-8">
           <span>
-            <strong>Total Produk:</strong> {products.length || 0}
+            <strong>Total Produk:</strong> {products.length}
           </span>
+
           {products.length > 0 && (
             <span>
               <strong>Kisaran Harga:</strong> Rp{" "}
-              {Math.min(
-                ...products.map((p: any) => p.harga || 0)
-              ).toLocaleString("id-ID")}{" "}
+              {Math.min(...products.map((p: any) => p.harga)).toLocaleString(
+                "id-ID"
+              )}{" "}
               - Rp{" "}
-              {Math.max(
-                ...products.map((p: any) => p.harga || 0)
-              ).toLocaleString("id-ID")}
+              {Math.max(...products.map((p: any) => p.harga)).toLocaleString(
+                "id-ID"
+              )}
             </span>
           )}
-          <p>
-            <strong>Kategori Produk:</strong> {umkm.Kategori_usaha}
-          </p>
         </div>
 
         {products.length === 0 ? (
           <p className="text-center text-gray-500 text-lg">Belum ada produk.</p>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {products.map((p: any) => (
-              <a
-                key={p.id}
-                href={`/umkm/${umkm.id}/${p.id}`}
-                className="group relative bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-              >
-                {/* Gambar */}
-                <div className="relative w-full aspect-square overflow-hidden">
-                  <Image
-                    src={p.image_url || "/images/placeholder-product.webp"}
-                    alt={p.nama_produk}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                </div>
+            {products.map((p: any) => {
+              const cover =
+                p.images?.find((img: any) => img.is_primary)?.image_url ||
+                p.images?.[0]?.image_url ||
+                "/images/placeholder-product.webp";
 
-                {/* Info Produk */}
-                <div className="p-4 text-center">
-                  <h3 className="font-semibold text-gray-800 text-lg line-clamp-1 mb-1">
-                    {p.nama_produk}
-                  </h3>
-                  <p className="text-green-700 font-bold text-sm mb-2">
-                    Rp {p.harga?.toLocaleString("id-ID")}
-                  </p>
-                  <p className="text-sm text-gray-500 line-clamp-2 h-[40px]">
-                    {p.description || "Tidak ada deskripsi produk."}
-                  </p>
-                </div>
+              return (
+                <a
+                  key={p.id}
+                  href={`/umkm/${umkm.id}/${p.id}`}
+                  className="group relative bg-white border rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition"
+                >
+                  {/* Foto Produk */}
+                  <div className="relative w-full aspect-square overflow-hidden">
+                    <Image
+                      src={cover}
+                      alt={p.nama_produk}
+                      fill
+                      className="object-cover group-hover:scale-105 duration-500"
+                    />
+                  </div>
 
-                {/* Hover effect text */}
-                <div className="absolute inset-0 flex items-center justify-center bg-green-700/70 text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  Lihat Detail
-                </div>
-              </a>
-            ))}
+                  {/* Info Produk */}
+                  <div className="p-4 text-center">
+                    <h3 className="font-semibold text-gray-800 text-lg line-clamp-1">
+                      {p.nama_produk}
+                    </h3>
+                    <p className="text-green-700 font-bold text-sm">
+                      Rp {p.harga.toLocaleString("id-ID")}
+                    </p>
+                  </div>
+
+                  {/* Hover Layer */}
+                  <div className="absolute inset-0 bg-green-700/60 text-white text-sm font-medium flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                    Lihat Detail
+                  </div>
+                </a>
+              );
+            })}
           </div>
         )}
       </section>
 
-      {/* 🟢 Ulasan */}
+      {/* Ulasan */}
       <section
         id="ulasan"
-        className="max-w-6xl mx-auto mt-12 px-6 py-6 bg-white rounded-2xl shadow-md border border-gray-100"
+        className="max-w-6xl mx-auto mt-12 px-6 py-6 bg-white rounded-2xl shadow-md border"
       >
         <UmkmRating umkmId={umkm.id} />
       </section>
 
-
-      {/* 🟢 Lokasi */}
+      {/* Lokasi */}
       <section
         id="lokasi"
-        className="max-w-6xl mx-auto mt-12 px-6 py-8 bg-white rounded-2xl shadow-md border border-gray-100 text-center"
+        className="max-w-6xl mx-auto mt-12 px-6 py-8 bg-white rounded-2xl shadow-md border text-center"
       >
         <h2 className="text-3xl font-bold mb-4 text-green-800">Lokasi</h2>
-        <p className="text-gray-600 mb-4">
-          {umkm.alamat || "Alamat belum tersedia"}
-        </p>
+        <p className="text-gray-600 mb-4">{umkm.alamat || "-"}</p>
 
         {umkm.gmaps_url ? (
-          <div className="flex justify-center">
-            <div
-              className="rounded-lg overflow-hidden shadow-inner center"
-              dangerouslySetInnerHTML={{ __html: umkm.gmaps_url }}
-            />
-          </div>
+          <div
+            className="rounded-lg overflow-hidden shadow-inner center"
+            dangerouslySetInnerHTML={{ __html: umkm.gmaps_url }}
+          />
         ) : (
-          <p className="text-gray-500">Lokasi belum tersedia untuk UMKM ini.</p>
+          <p className="text-gray-500">Lokasi belum tersedia.</p>
         )}
       </section>
 
-      {/* 🟢 Kontak */}
+      {/* Kontak */}
       <section
         id="kontak"
-        className="max-w-6xl mx-auto mt-12 px-6 py-10 bg-white rounded-2xl shadow-md border border-gray-100 text-center"
+        className="max-w-6xl mx-auto mt-12 px-6 py-10 bg-white rounded-2xl shadow-md border text-center"
       >
         <h2 className="text-3xl font-bold mb-6 text-[#00804c]">Kontak</h2>
+
         <div className="flex flex-wrap justify-center gap-6">
           {/* WhatsApp */}
-          <div className="w-64 border border-green-600 bg-green-50 rounded-xl p-6 flex flex-col items-center justify-between hover:shadow-lg transition-all">
-            <Phone className="text-green-700 w-8 h-8 mb-2" />
-            <h3 className="font-semibold text-[#00804c]">WhatsApp</h3>
-            <p className="text-sm text-gray-600">
-              {umkm.nomer === "-" ? "Nomor belum tersedia" : umkm.nomer}
-            </p>
-            {umkm.nomer !== "-" && (
-              <a
-                href={`https://wa.me/${umkm.nomer.replace(/\D/g, "")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 px-4 py-1.5 text-[#00804c] border border-[#00804c] rounded-md text-sm hover:bg-[#00804c] hover:text-white transition"
-              >
-                Hubungi Kami
-              </a>
-            )}
+          <div className="w-64 border border-green-600 bg-green-50 rounded-xl p-6 text-center hover:shadow-lg transition">
+            <Phone className="text-green-700 w-8 h-8 mx-auto mb-2" />
+            <h3 className="font-semibold">WhatsApp</h3>
+            <p>{umkm.nomer || "-"}</p>
           </div>
 
           {/* Instagram */}
-          <div className="w-64 border border-green-600 bg-green-50 rounded-xl p-6 flex flex-col items-center justify-between hover:shadow-lg transition-all">
-            <Instagram className="text-[#00804c] w-8 h-8 mb-2" />
-            <h3 className="font-semibold text-[#00804c]">Instagram</h3>
-            <p className="text-sm text-gray-600">
-              {umkm.akun_toko === "-" ? "Akun belum tersedia" : '@' + umkm.akun_toko}
-            </p>
-            {umkm.akun_toko !== "-" &&  (
-              <a
-                href={`https://instagram.com/${umkm.akun_toko}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 px-4 py-1.5 text-[#00804c] border border-[#00804c] rounded-md text-sm hover:bg-[#00804c] hover:text-white transition"
-              >
-                Kunjungi Akun
-              </a>
-            )}
+          <div className="w-64 border border-green-600 bg-green-50 rounded-xl p-6 text-center hover:shadow-lg transition">
+            <Instagram className="text-[#00804c] w-8 h-8 mx-auto mb-2" />
+            <h3 className="font-semibold">Instagram</h3>
+            <p>@{umkm.akun_toko || "-"}</p>
           </div>
 
           {/* Email */}
-          <div className="w-64 border border-green-600 bg-green-50 rounded-xl p-6 flex flex-col items-center justify-between hover:shadow-lg transition-all">
-            <svg
-              xmlns="https://www.iconpacks.net/icons/1/free-mail-icon-142-thumb.png"
-              className="w-8 h-8 text-[#00804c] mb-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16 12H8m8-4H8m0 8h8m4 4H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2z"
-              />
-            </svg>
-            <h3 className="font-semibold text-[#00804c]">Email</h3>
-            <p className="text-sm text-gray-600">
-              {umkm.email === "-" ? "Email belum tersedia" : umkm.email}
-            </p>
-            {umkm.email !== "-" && (
-              <a
-                href={`mailto:${umkm.email}`}
-                className="mt-3 px-4 py-1.5 text-[#00804c] border border-[#00804c] rounded-md text-sm hover:bg-[#00804c] hover:text-white transition"
-              >
-                Kirim Email
-              </a>
-            )}
+          <div className="w-64 border border-green-600 bg-green-50 rounded-xl p-6 text-center hover:shadow-lg transition">
+            <h3 className="font-semibold">Email</h3>
+            <p>{umkm.email || "-"}</p>
           </div>
         </div>
       </section>

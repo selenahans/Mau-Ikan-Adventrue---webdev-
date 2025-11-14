@@ -51,7 +51,13 @@ html {
   background: url(/images/awan1.png);
   /* background-size: 400% 400%; */
 }
-
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 body {
   font-family: Helvetica;
 }

@@ -24,6 +24,19 @@ export default function ProductDetailPage() {
     });
   }, [id, product_id]);
 
+  useEffect(() => {
+    if (product && !product.selectedImage) {
+      const primary =
+        product.images?.find((i: any) => i.is_primary)?.image_url ||
+        product.images?.[0]?.image_url;
+
+      setProduct((prev: any) => ({
+        ...prev,
+        selectedImage: primary,
+      }));
+    }
+  }, [product]);
+
   // 🔹 Update tab aktif saat scroll
   useEffect(() => {
     const sections = document.querySelectorAll("section[id]");
@@ -107,15 +120,49 @@ export default function ProductDetailPage() {
         {/* 🟢 Header Produk */}
         <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg border border-gray-100 p-8 mt-6">
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Gambar Produk */}
-            <div className="relative rounded-xl overflow-hidden border">
-              <Image
-                src={product.image_url || "/images/placeholder-product.webp"}
-                alt={product.nama_produk}
-                width={600}
-                height={600}
-                className="object-cover w-full h-[400px]"
-              />
+            {/* ==== FOTO PRODUK (GALLERY) ==== */}
+            <div>
+              {/* Foto Utama */}
+              <div className="relative rounded-xl overflow-hidden border mb-4">
+                <Image
+                  src={
+                    product.selectedImage ||
+                    product.images?.find((img: any) => img.is_primary)
+                      ?.image_url ||
+                    product.images?.[0]?.image_url ||
+                    "/images/placeholder-product.webp"
+                  }
+                  alt={product.nama_produk}
+                  width={600}
+                  height={600}
+                  className="object-cover w-full h-[400px]"
+                />
+              </div>
+
+              {/* List Foto Thumbnail */}
+              {product.images && product.images.length > 0 && (
+                <div className="flex gap-3 overflow-x-auto pb-2">
+                  {product.images.map((img: any) => (
+                    <button
+                      key={img.id}
+                      onClick={() =>
+                        setProduct((prev: any) => ({
+                          ...prev,
+                          selectedImage: img.image_url,
+                        }))
+                      }
+                      className="relative w-20 h-20 rounded-lg overflow-hidden border hover:scale-105 transition"
+                    >
+                      <Image
+                        src={img.image_url}
+                        alt="thumb"
+                        fill
+                        className="object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Info Produk */}
@@ -216,39 +263,81 @@ export default function ProductDetailPage() {
           <h2 className="text-2xl font-bold text-green-800 mb-6 text-center">
             Produk Lainnya
           </h2>
+
           {related.length === 0 ? (
             <p className="text-gray-500 text-center">
-              Belum ada rekomendasi produk lainnya.
+              Tidak ada produk lainnya.
             </p>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {related.map((r: any) => (
-                <a
-                  key={r.id}
-                  href={`/umkm/${id}/${r.id}`}
-                  className="group border border-gray-100 rounded-xl bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all overflow-hidden"
-                >
-                  <div className="relative aspect-square overflow-hidden">
-                    <Image
-                      src={r.image_url || "/images/placeholder-product.webp"}
-                      alt={r.nama_produk}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform"
-                    />
-                  </div>
-                  <div className="p-3">
-                    <h3 className="font-semibold text-gray-800 text-sm line-clamp-1 mb-1">
-                      {r.nama_produk}
-                    </h3>
-                    <p className="text-green-700 font-bold text-sm">
-                      Rp {r.harga?.toLocaleString("id-ID")}
-                    </p>
-                  </div>
-                  <div className="absolute inset-0 flex items-center justify-center bg-green-700/70 text-white font-medium text-sm opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    Lihat Detail
-                  </div>
-                </a>
-              ))}
+              {related.map((r: any) => {
+                const cover =
+                  r.images
+                    ?.find((img: any) => img.is_primary)
+                    ?.image_url?.trim() ||
+                  r.images?.[0]?.image_url?.trim() ||
+                  "/images/placeholder-product.webp";
+
+                return (
+                  <a
+                    key={r.id}
+                    href={`/umkm/${id}/${r.id}`}
+                    className="
+              group 
+              rounded-xl 
+              overflow-hidden 
+              bg-white 
+              border border-gray-200 
+              shadow-sm 
+              hover:shadow-lg 
+              hover:-translate-y-1 
+              transition-all 
+              duration-300 
+              relative
+            "
+                  >
+                    {/* Foto */}
+                    <div className="relative aspect-square overflow-hidden">
+                      <Image
+                        src={cover}
+                        alt={r.nama_produk}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                    </div>
+
+                    {/* Info */}
+                    <div className="p-4">
+                      <h3 className="font-semibold text-gray-800 text-sm line-clamp-1 mb-1">
+                        {r.nama_produk}
+                      </h3>
+                      <p className="text-green-700 font-bold text-sm">
+                        Rp {r.harga?.toLocaleString("id-ID")}
+                      </p>
+                    </div>
+
+                    {/* Hover Overlay */}
+                    <div
+                      className="
+                absolute inset-0 
+                bg-green-700/70 
+                text-white 
+                opacity-0 
+                group-hover:opacity-100 
+                flex 
+                items-center 
+                justify-center 
+                font-medium 
+                text-sm 
+                transition-all 
+                duration-300
+              "
+                    >
+                      Lihat Detail
+                    </div>
+                  </a>
+                );
+              })}
             </div>
           )}
         </section>

@@ -14,7 +14,16 @@ export async function GET(
     const { data: product, error: prodErr } = await supabase
       .from("product")
       .select(
-        "id, nama_produk, harga, deskripsi, info_penting, stok, image_url, umkm_id"
+        `
+    id,
+    nama_produk,
+    harga,
+    deskripsi,
+    info_penting,
+    stok,
+    umkm_id,
+    images:product_images (id, image_url, is_primary)
+  `
       )
       .eq("id", product_id)
       .eq("umkm_id", id)
@@ -26,7 +35,18 @@ export async function GET(
     // 🔹 Ambil produk lain (rekomendasi)
     const { data: related, error: relErr } = await supabase
       .from("product")
-      .select("id, nama_produk, harga, image_url")
+      .select(
+        `
+    id,
+    nama_produk,
+    harga,
+    images:product_images (
+      id,
+      image_url,
+      is_primary
+    )
+  `
+      )
       .eq("umkm_id", id)
       .neq("id", product_id)
       .limit(4);

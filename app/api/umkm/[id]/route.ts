@@ -8,6 +8,7 @@ export async function GET(
   const { id } = await context.params;
   const umkmId = parseInt(id);
 
+  // Ambil data UMKM
   const { data: umkm, error: umkmErr } = await supabase
     .from("umkm")
     .select("*")
@@ -21,11 +22,27 @@ export async function GET(
     );
   }
 
+  // Ambil produk + semua fotonya
   const { data: products, error: productErr } = await supabase
     .from("product")
-    .select("*")
+    .select(
+      `
+      id,
+      umkm_id,
+      nama_produk,
+      harga,
+      deskripsi,
+      info_penting,
+      stok,
+      images:product_images (
+        id,
+        image_url,
+        is_primary
+      )
+    `
+    )
     .eq("umkm_id", umkmId);
-
+  console.log(products);
   if (productErr) {
     return NextResponse.json(
       { ok: false, message: "Gagal memuat produk" },

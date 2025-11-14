@@ -35,12 +35,18 @@ export default function UmkmPage() {
   return (
     <div className="min-h-screen bg-[#F6F7ED] relative overflow-hidden">
       {/* Decorative Background Elements */}
-      <div className="absolute top-0 -left-30 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" 
-      style={{ animationDuration: "6s", animationDelay: "2s" }}/>
-      <div className="absolute -top-40 left-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" 
-      style={{ animationDuration: "6s", animationDelay: "3s"}}/>
-      <div className="absolute -top-40 right-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" 
-      style={{ animationDuration: "6s", animationDelay: "1s"}}/>
+      <div
+        className="absolute top-0 -left-30 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
+        style={{ animationDuration: "6s", animationDelay: "2s" }}
+      />
+      <div
+        className="absolute -top-40 left-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
+        style={{ animationDuration: "6s", animationDelay: "3s" }}
+      />
+      <div
+        className="absolute -top-40 right-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
+        style={{ animationDuration: "6s", animationDelay: "1s" }}
+      />
       <div
         className="absolute -top-10 -right-40 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"
         style={{ animationDuration: "6s", animationDelay: "2s" }}
@@ -68,30 +74,65 @@ export default function UmkmPage() {
           </p>
         </div>
 
-        {/* Enhanced Search Bar */}
-        <div className="flex justify-center items-center mb-16">
-          <div className="relative w-full max-w-2xl">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#74C365] to-[#00804c] rounded-2xl blur opacity-20" />
-            <div className="relative bg-white backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 p-2">
-              <div className="flex items-center gap-3">
-                <div className="pl-4">
-                  <Search className="text-gray-800 w-6 h-6" />
-                </div>
+        {/* Search + Filter Section */}
+        <div className="flex justify-center w-full mt-4 mb-14">
+          <div className="flex items-center gap-4 w-full max-w-4xl">
+            <div className="relative flex-1">
+              <div className="absolute inset-0 bg-gradient-to-r from-[#74C365] to-[#00804c] rounded-2xl blur-lg opacity-20" />
+              <div className="relative bg-white/90 backdrop-blur-xl rounded-xl shadow-md border border-gray-200 px-4 h-[56px] flex items-center">
+                <Search className="text-gray-800 w-5 h-5 mr-3" />
                 <input
                   type="text"
-                  placeholder="Cari nama UMKM atau kategori usaha..."
+                  placeholder="Cari UMKM atau kategori usaha..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  className="flex-1 bg-transparent py-4 pr-4 text-gray-800 placeholder-gray-400 focus:outline-none text-lg"
+                  className="flex-1 bg-transparent text-gray-800 placeholder-gray-400 focus:outline-none text-base"
                 />
-                {query && (
-                  <button
-                    onClick={() => setQuery("")}
-                    className="mr-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-600 transition-colors"
-                  >
-                    Clear
-                  </button>
+              </div>
+            </div>
+
+            <div className="relative">
+              <select
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="
+          appearance-none
+          bg-white/90 backdrop-blur-xl
+          rounded-xl
+          border border-gray-200
+          shadow-md
+          text-gray-700 text-base font-medium
+          h-[56px]
+          pl-4 pr-10
+          w-[220px]
+          focus:ring-2 focus:ring-[#00804c]/40
+          cursor-pointer
+        "
+              >
+                <option value="">Semua Kategori</option>
+                {[...new Set(umkmList.map((u) => u.Kategori_usaha))].map(
+                  (cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  )
                 )}
+              </select>
+
+              {/* arrow icon */}
+              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">
+                <svg
+                  width="16"
+                  height="16"
+                  fill="none"
+                  stroke="#00804c"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
               </div>
             </div>
           </div>
