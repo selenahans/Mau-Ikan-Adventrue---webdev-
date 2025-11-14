@@ -52,6 +52,10 @@ html {
   /* background-size: 400% 400%; */
 }
 
+body {
+  font-family: Helvetica;
+}
+
 @keyframes gradient {
   0% {
     background-position: 0% 5%;

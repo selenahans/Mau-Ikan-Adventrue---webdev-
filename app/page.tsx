@@ -99,18 +99,20 @@ export default function TentangKami() {
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        style={{
-          width: "40%",
-          height: "auto",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundImage: "url(/images/aboutblur.png)",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "105%",
-          backgroundPosition: "center",
-        }}
+        // style={{
+        //   width: "40%",
+        //   height: "auto",
+        //   display: "flex",
+        //   justifyContent: "center",
+        //   alignItems: "center",
+        //   backgroundImage: "url(/images/aboutblur.png)",
+        //   backgroundRepeat: "no-repeat",
+        //   backgroundSize: "105%",
+        //   backgroundPosition: "center",
+        // }}
+        className="w-full max-w-xl mx-auto flex justify-center mt-10 rounded-2xl relative"
       >
+        <div className="absolute inset-0 rounded-4xl bg-[#F6F7ED] blur-3xl  mt-20 max-h-35 hover:scale-120 transition-all"></div>
         <img
           src={isHovered ? "/images/gifdoangfix.gif" : "/images/logointro.png"}
           style={{
@@ -118,6 +120,7 @@ export default function TentangKami() {
             height: "auto",
             objectFit: "contain",
             transition: "opacity 0.3s ease",
+            zIndex: 1,
           }}
         />
       </div>
@@ -208,16 +211,19 @@ export default function TentangKami() {
           }}
         ></ParallaxLayer>
 
-        <ParallaxLayer
-          offset={0}
-          speed={0.2}
-          style={{
-            backgroundImage: "url(/images/about1rev.png)",
-            backgroundPosition: "center",
-            pointerEvents: "none",
-            backgroundSize: "60%",
-          }}
-        ></ParallaxLayer>
+        <ParallaxLayer offset={0.4} speed={0.2}>
+          <div className="w-full max-w-2xl mx-auto flex justify-center mt-10 rounded-2xl relative">
+            {/* Outer blur glow */}
+            <div className="absolute inset-0 rounded-2xl bg-[#F6F7ED] blur-xl hover:scale-120 transition-all"></div>
+
+            {/* Content */}
+            <p className="text-3xl font-bold font-['Helvetica'] relative z-10 p-6 group-hover:scale-105 transition-transform">
+              <span className="bg-gradient-to-br from-[#00804c] to-[#1E488F] bg-clip-text text-transparent">
+                The Source of ECO-friendly Solutions,
+              </span>
+            </p>
+          </div>
+        </ParallaxLayer>
         <ParallaxLayer
           offset={0.6}
           speed={0.8}
@@ -232,30 +238,16 @@ export default function TentangKami() {
         >
           <HoverLogo />
         </ParallaxLayer>
+        <ParallaxLayer offset={1.4} speed={0.2}>
+          <div className="w-full flex justify-center mt-10">
+            <p className="bg-[#F6F7ED] max-w-4xl p-6 rounded-2xl text-2xl text-[#00804c] text-center">
+              Menjadi wadah bagi pelaku UMKM ramah lingkungan untuk
+              memperkenalkan produk dan usahanya kepada masyarakat luas.
+              Menampilkan beragam bisnis yang mengusung prinsip sustainability.
+            </p>
+          </div>
+        </ParallaxLayer>
 
-        {/* <ParallaxLayer
-          offset={0.6}
-          speed={0.4}
-          style={{
-            backgroundImage: "url(/images/about2.png)",
-            backgroundPosition: "center",
-            pointerEvents: "none",
-            backgroundSize: "40%", 
-          }}
-          sticky={{ start: 0.6, end: 0.8 }}
-        ></ParallaxLayer> */}
-
-        <ParallaxLayer
-          offset={1.1}
-          speed={0.2}
-          style={{
-            backgroundImage: "url(/images/about3.png)",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            pointerEvents: "none",
-            backgroundSize: "60%",
-          }}
-        />
         {/* <ParallaxLayer
           offset={1.8}
           speed={0.3}
