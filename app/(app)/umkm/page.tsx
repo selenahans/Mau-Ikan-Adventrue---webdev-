@@ -58,7 +58,7 @@ export default function UmkmPage() {
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#74C365] rounded-full mb-6 animate-bounce">
             <Sparkles className="w-4 h-4 text-[#F6F7ED]" />
             <span className="text-sm font-semibold text-[#F6F7ED]">
-              Lebih dari 100+ UMKM Terdaftar
+              Lebih dari 9+ UMKM Terdaftar
             </span>
           </div>
 

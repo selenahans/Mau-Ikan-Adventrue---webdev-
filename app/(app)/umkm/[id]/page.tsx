@@ -234,16 +234,18 @@ export default function UmkmDetailPage() {
       {/* Lokasi */}
       <section
         id="lokasi"
-        className="max-w-6xl mx-auto mt-12 px-6 py-8 bg-white rounded-2xl shadow-md border text-center"
+        className="max-w-6xl justify-center mx-auto mt-12 px-6 py-8 bg-white rounded-2xl shadow-md border text-center"
       >
         <h2 className="text-3xl font-bold mb-4 text-green-800">Lokasi</h2>
         <p className="text-gray-600 mb-4">{umkm.alamat || "-"}</p>
 
         {umkm.gmaps_url ? (
-          <div
-            className="rounded-lg overflow-hidden shadow-inner center"
-            dangerouslySetInnerHTML={{ __html: umkm.gmaps_url }}
-          />
+          <div className="flex justify-center">
+            <div
+              className="rounded-lg overflow-hidden shadow-inner w-fit"
+              dangerouslySetInnerHTML={{ __html: umkm.gmaps_url }}
+            />
+          </div>
         ) : (
           <p className="text-gray-500">Lokasi belum tersedia.</p>
         )}

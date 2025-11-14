@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
+import HeroCarousel from "@/components/heroEdukasi";
 
 type TabKey = "inspirasi" | "umkm" | "panduan" | "konsumen" | "komunitas";
 
@@ -15,6 +16,24 @@ export default function EdukasiPage() {
   const panduanRef = useRef<HTMLElement | null>(null);
   const konsumenRef = useRef<HTMLElement | null>(null);
   const komunitasRef = useRef<HTMLElement | null>(null);
+  const mentorImages = [
+  "https://images.pexels.com/photos/3119215/pexels-photo-3119215.jpeg",
+  "https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg",
+  "https://images.pexels.com/photos/25047761/pexels-photo-25047761.jpeg",
+];
+const greenTips = [
+  "Gunakan Bahan Baku Ramah Lingkungan",
+  "Kurangi Penggunaan Plastik Sekali Pakai",
+  "Terapkan Sistem Produksi Hemat Energi",
+  "Kelola Limbah Secara Bertanggung Jawab",
+  "Digitalisasi Dokumen dan Promosi",
+  "Bangun Budaya Kerja Ramah Lingkungan",
+  "Sediakan Produk Refill atau Kemasan Isi Ulang",
+  "Pilih Supplier yang Juga Berkomitmen pada Lingkungan",
+  "Edukasi Konsumen tentang Dampak Positif Praktik Hijau"
+];
+
+
 
   // ===== OBSERVE SCROLL =====
   useEffect(() => {
@@ -64,17 +83,18 @@ export default function EdukasiPage() {
   );
 
   return (
-    <div className="min-h-screen  relative overflow-hidden mt-20">
-      {/* ===== Background Blobs like About Us ===== */}
-      <div className="absolute top-0 -left-20 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
-      <div className="absolute top-20 right-0 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
+    <div className="min-h-screen bg-[#F6F7ED] relative overflow-hidden">
+      {/* background blur */}
+      <div className="absolute top-0 -left-30 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse pointer-events-none" />
+      <div className="absolute -top-40 left-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse pointer-events-none" />
+      <div className="absolute -top-40 right-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse pointer-events-none" />
+      <div className="absolute -top-10 -right-60 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-1 animate-pulse pointer-events-none" />
 
       {/* ===== Sticky SubNav ===== */}
-      <header className="sticky top-0 z-40 bg-transparent">
-        <div className="max-w-7xl mx-auto px-4">
+      <header className="mt-30 relative z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="h-16 flex items-center justify-center">
-            {/* Desktop Menu */}
-            <nav className="hidden md:flex items-center gap-5 backdrop-blur-lg bg-white/30 shadow-sm px-6 py-2 rounded-2xl">
+            <nav className="hidden md:flex items-center gap-6 backdrop-blur-lg rounded-2xl px-4 py-2 z-0">
               <button
                 onClick={() => scrollTo("inspirasi")}
                 className={linkCls("inspirasi")}
@@ -95,16 +115,8 @@ export default function EdukasiPage() {
                 onClick={() => scrollTo("panduan")}
                 className={linkCls("panduan")}
               >
-                Tips Panduan
+                Tips Ramah Lingkungan
                 {underline("panduan")}
-              </button>
-
-              <button
-                onClick={() => scrollTo("konsumen")}
-                className={linkCls("konsumen")}
-              >
-                Edukasi Konsumen
-                {underline("konsumen")}
               </button>
 
               <button
@@ -130,8 +142,7 @@ export default function EdukasiPage() {
               {[
                 ["inspirasi", "Inspirasi Hijau"],
                 ["umkm", "Cerita UMKM"],
-                ["panduan", "Tips Panduan"],
-                ["konsumen", "Edukasi Konsumen"],
+                ["panduan", "Tips Ramah Lingkungan"],
                 ["komunitas", "Komunitas Hijau"],
               ].map(([k, label]) => (
                 <button
@@ -154,35 +165,94 @@ export default function EdukasiPage() {
       {/* =====================================================
          SECTION: INSPIRASI HIJAU
       ===================================================== */}
-      <section id="inspirasi" ref={inspirasiRef} className="scroll-mt-28 py-20">
-        <h2 className="text-4xl font-bold text-[#00804c] text-center mb-10">
-          Inspirasi Hijau
-        </h2>
 
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-4">
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="bg-white rounded-2xl p-6 shadow hover:shadow-xl hover:-translate-y-1 transition"
-            >
-              <div className="w-32 h-32 mx-auto mb-4">
-                <Image
-                  src="/images/aboutus_pendiri.jpg"
-                  width={200}
-                  height={200}
-                  alt="mentor"
-                  className="rounded-full"
-                />
-              </div>
-              <h3 className="text-[#00804c] text-xl font-semibold text-center">
-                Figur Hijau {i}
-              </h3>
-              <p className="text-gray-600 text-sm mt-2 text-center">
-                Kisah inspiratif tentang perjalanan menciptakan dampak
-                lingkungan.
-              </p>
+      <div className="max-w-6xl grid mt-15 mb-15 md:grid-cols-2 gap-8 px-4 mx-auto">
+        <div className="flex flex-col justify-center">
+          <h2 className="text-5xl font-bold font-['Helvetica'] relative z-10 p-6">
+            <span className="bg-gradient-to-br from-[#00804c] to-[#1E488F] bg-clip-text text-transparent">
+              Learn, Grow,{" "}
+            </span>
+          </h2>
+          <h2 className="text-5xl font-bold font-['Helvetica'] relative z-10 p-6">
+            <span className="bg-gradient-to-br from-[#00804c] to-[#1E488F] bg-clip-text text-transparent">
+              Be Green with
+            </span>
+          </h2>
+          <img src="/images/gifhlmbgs.gif" />
+        </div>
+        <div className="flex flex-col grid md:grid-cols-2 justify-center p-6">
+          <div className="p-6">
+            <img
+              src="/images/edu1.png"
+              className="rounded-2xl shadow transition hover:shadow-xl hover:scale-105"
+            />
+          </div>
+          <div>
+            <div className="p-6">
+              <img
+                src="/images/edu2.png"
+                className="rounded-2xl shadow transition hover:shadow-xl hover:scale-105"
+              />
             </div>
-          ))}
+            <div className="p-6">
+              <img
+                src="/images/edu3.png"
+                className="rounded-2xl shadow transition hover:shadow-xl hover:scale-105"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="inspirasi" ref={inspirasiRef} className="scroll-mt-10 py-20">
+        <div
+          className="gap-6 bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/bgrumput.png')" }}
+        >
+          <h2
+            className="text-4xl p-10 text-[#F6F7ED] text-center font-bold"
+            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+          >
+            Inspirasi Hijau
+          </h2>
+          <div className="mb-12 max-w-6xl mx-auto grid md:grid-cols-3 mt-6 gap-8 px-4">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="relative group cursor-pointer hover:-translate-y-1 transition mb-20"
+              >
+                {/* Image on top */}
+                <div className="w-full flex justify-center">
+                  <Image
+                    src={mentorImages[i - 1]} 
+                    width={300}
+                    height={300}
+                    alt="mentor"
+                    className="rounded-full"
+                  />
+                </div>
+
+                {/* Hidden content that appears on hover */}
+                <div
+                  className="
+  absolute 
+  top-1/2 left-1/2 
+  -translate-x-1/2 -translate-y-1/2
+  w-[250px] h-[250px]
+  bg-[#74C365] p-6 shadow 
+  flex flex-col items-center justify-center 
+  opacity-0 group-hover:opacity-100 
+  transition-opacity duration-300 
+  rounded-full
+"
+                >
+                  <h3 className="text-[#F6F7ED] text-lg font-semibold text-center">
+                    Figur Hijau {i}
+                  </h3>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -192,17 +262,18 @@ export default function EdukasiPage() {
       <section
         id="umkm"
         ref={umkmRef}
-        className="scroll-mt-28 py-20 bg-[#F0F7F0]"
+        className="scroll-mt-28 mb-40"
       >
         <h2 className="text-4xl font-bold text-[#00804c] text-center mb-10">
           Cerita UMKM
         </h2>
+        <HeroCarousel />
 
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 px-4">
+        {/* <div className="max-w-6xl mx-auto gap-10 px-4">
           {[1, 2].map((i) => (
             <div
               key={i}
-              className="bg-white rounded-xl overflow-hidden shadow hover:shadow-xl transition"
+              className="bg-white grid md:grid-cols-2 rounded-xl overflow-hidden shadow hover:shadow-xl transition"
             >
               <Image
                 src="/images/bgvisi.png"
@@ -222,7 +293,7 @@ export default function EdukasiPage() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </section>
 
       {/* =====================================================
@@ -231,10 +302,10 @@ export default function EdukasiPage() {
       <section
         id="panduan"
         ref={panduanRef}
-        className="scroll-mt-28 py-20 bg-[url('/images/daun.png')] bg-cover bg-center bg-fixed"
+        className="scroll-mt-28 py-20 bg-[url('/images/bgtips.png')] bg-cover bg-center bg-fixed"
       >
         <h2 className="text-4xl font-bold text-white text-center mb-10 drop-shadow-lg">
-          Tips & Panduan UMKM
+          Tips Ramah Lingkungan
         </h2>
 
         <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
@@ -243,37 +314,15 @@ export default function EdukasiPage() {
               key={i}
               className="bg-white rounded-xl p-6 shadow hover:shadow-xl hover:-translate-y-1 transition"
             >
-              <h3 className="text-[#00804c] font-semibold">Panduan #{i + 1}</h3>
-              <p className="text-gray-600 text-sm mt-2">
-                Langkah praktis membantu UMKM menerapkan inovasi hijau.
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* =====================================================
-         SECTION: EDUKASI KONSUMEN
-      ===================================================== */}
-      <section
-        id="konsumen"
-        ref={konsumenRef}
-        className="scroll-mt-28 py-20 bg-[#F6F7ED]"
-      >
-        <h2 className="text-4xl font-bold text-[#00804c] text-center mb-10">
-          Edukasi Konsumen
-        </h2>
-
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-4">
-          {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div
-              key={i}
-              className="bg-white p-6 rounded-xl shadow hover:shadow-xl transition"
-            >
-              <h3 className="font-semibold text-[#00804c]">Materi #{i}</h3>
-              <p className="text-sm text-gray-600 mt-2">
-                Pembelajaran untuk mendukung gaya hidup ramah lingkungan.
-              </p>
+              <Image
+                src={`/images/tips/${i+1}.png`}
+                width={800}
+                height={500}
+                alt="tips"
+                className="w-full mb-6"
+              />
+              <p className="text-gray-500">Tips #{i + 1}</p>
+              <h1 className="text-[#00804c]  font-semibold text-2xl">{greenTips[i]}</h1>
             </div>
           ))}
         </div>
@@ -285,18 +334,18 @@ export default function EdukasiPage() {
       <section
         id="komunitas"
         ref={komunitasRef}
-        className="scroll-mt-28 py-24 bg-[url('/images/bgvisi.png')] bg-cover bg-center"
+        className="scroll-mt-28 py-24 bg-[#F6F7ED] bg-cover bg-center"
       >
         <div className="text-center max-w-4xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-white drop-shadow mb-4">
+          <h2 className="text-4xl font-bold text-[#00804c] drop-shadow mb-4">
             Komunitas Hijau
           </h2>
-          <p className="text-emerald-50 max-w-xl mx-auto mb-6">
+          <p className="text-gray-500 max-w-lg mx-auto mb-6">
             Bergabung dalam komunitas peduli lingkungan untuk berbagi ide,
             dampak, dan aksi nyata.
           </p>
 
-          <button className="px-6 py-3 bg-white text-[#00804c] font-semibold rounded-xl shadow hover:bg-emerald-100 transition">
+          <button className="px-6 py-3 bg-white text-[#00804c] font-semibold rounded-xl shadow hover:bg-[#74C365] hover:text-[#F6F7ED] transition">
             Gabung Sekarang
           </button>
         </div>
