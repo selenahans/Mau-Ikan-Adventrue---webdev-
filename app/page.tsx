@@ -119,52 +119,54 @@ export default function TentangKami() {
       </ParallaxLayer>
 
       {/* Video Background */}
-      <ParallaxLayer
-        offset={0}
-        speed={1}
-        factor={2}
-        style={{
-          width: "100%",
-          height: "100%",
-          overflow: "hidden",
-          pointerEvents: "none",
-        }}
-      >
-        <video
-          src="/videos/langit_ges.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover scale-120"
-          preload="auto"
+      <ParallaxLayer offset={0} speed={1} factor={2}>
+        <img
+          src="/images/sky.jpg"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "400vh",
+            objectFit: "cover",
+            zIndex: -1,
+          }}
         />
       </ParallaxLayer>
 
       {/* Mountain Background 1 */}
       <ParallaxLayer
-        offset={0}
+        offset={0.2}
         speed={0.1}
         factor={4}
         style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "400vh", // extends FAR beyond scroll
           backgroundImage: "url(/images/gunung_flipped_new.png)",
-          backgroundPosition: "center 250px",
-          backgroundSize: "110%",
+          backgroundPosition: "center bottom",
+          backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           pointerEvents: "none",
-          height: "100%",
         }}
       />
 
       {/* Mountain Background 2 */}
       <ParallaxLayer
-        offset={0}
+        offset={0.5}
         speed={0.5}
         factor={4}
         style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "400vh", // also fully covers
           backgroundImage: "url(/images/gunung_sj_new.png)",
-          backgroundPosition: "center 350px",
-          backgroundSize: "130%",
+          backgroundPosition: "center bottom",
+          backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           pointerEvents: "none",
         }}
