@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
-import { supabaseServer } from "@/lib/supabaseServer";
+import { supabase } from "@/lib/supabaseClient";
 
 export async function GET() {
-  const supabase = await supabaseServer();
-
   const { data, error } = await supabase
     .from("umkm")
     .select("id, name, Kategori_usaha, description, image_url")
