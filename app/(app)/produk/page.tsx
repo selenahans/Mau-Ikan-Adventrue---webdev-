@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { Search, Sparkles, ShoppingBag, Leaf, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Sparkles, ShoppingBag, Leaf } from "lucide-react";
 
 interface Product {
   id: number;
@@ -15,165 +15,238 @@ interface Product {
 export default function ProdukPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch("/api/products/read")
       .then((res) => res.json())
       .then((json) => {
         if (json.ok) setProducts(json.data);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
-  const filtered = products.filter((p) =>
-    p.nama_produk.toLowerCase().includes(query.toLowerCase())
+  const filtered = useMemo(
+    () =>
+      products.filter((p) =>
+        p.nama_produk.toLowerCase().includes(query.toLowerCase())
+      ),
+    [products, query]
   );
 
   return (
-    <div className="min-h-screen bg-[#F6F7ED] relative overflow-hidden">
-      {/* --- Background Blur Elements --- */}
-      <div className="absolute top-0 -left-32 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply blur-3xl opacity-10 animate-pulse" />
-      <div className="absolute -top-40 left-20 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply blur-3xl opacity-10 animate-pulse" />
-      <div className="absolute -top-40 right-20 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply blur-3xl opacity-10 animate-pulse" />
-      <div className="absolute top-10 right-40 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply blur-3xl opacity-20 animate-pulse" />
+    <div className="min-h-screen bg-gradient-to-br from-[#F6F7ED] via-[#F6F7ED] to-[#E8F5E9]">
+      {/* BACKGROUND GLOW (Sama seperti UMKM) */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-[#74C365]/20 to-[#DBE64C]/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-gradient-to-br from-[#00804c]/10 to-[#74C365]/10 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-gradient-to-br from-[#DBE64C]/15 to-[#74C365]/15 rounded-full blur-3xl animate-pulse delay-2000" />
+      </div>
 
-      <main className="relative z-10 pt-32 pb-20 px-4">
-        {/* --- HERO HEADER --- */}
-        <div className="text-center mb-16 max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#74C365] rounded-full mb-6 animate-bounce">
-            <Sparkles className="w-4 h-4 text-[#F6F7ED]" />
-            <span className="text-sm font-semibold text-[#F6F7ED]">
-              Lebih dari 100+ Produk Eco Friendly Terdaftar
+      <main className="relative z-10 pt-24 pb-20 px-4">
+        {/* HERO SECTION MATCH UMKM */}
+        <div className="text-center mb-16 max-w-5xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#00804c] to-[#74C365] rounded-full mb-8 shadow-lg hover:shadow-xl transition-shadow">
+            <Sparkles className="w-5 h-5 text-white animate-pulse" />
+            <span className="text-sm font-bold text-white tracking-wide">
+              {products.length}+ Produk Eco Friendly
             </span>
           </div>
 
-          <h1 className="text-6xl md:text-7xl font-black bg-gradient-to-r from-[#00804c] to-[#74C365] bg-clip-text text-transparent mb-6 leading-tight">
-            Temukan Produk
+          <h1 className="text-6xl md:text-8xl font-black mb-6 leading-none">
+            <span className="bg-gradient-to-r from-[#00804c] via-[#74C365] to-[#00804c] bg-clip-text text-transparent animate-gradient">
+              Temukan Produk
+            </span>
             <br />
-            <span className="text-5xl md:text-6xl">Ramah Lingkungan 🌱</span>
+            <span className="text-5xl md:text-7xl bg-gradient-to-r from-[#74C365] to-[#DBE64C] bg-clip-text text-transparent">
+              Ramah Lingkungan 🌱
+            </span>
           </h1>
 
-          <p className="text-gray-600 text-xl max-w-2xl mx-auto">
-            Dukung bisnis lokal yang peduli lingkungan dan berdampak positif
-            untuk masa depan yang lebih hijau
+          <p className="text-gray-700 text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed font-medium">
+            Jelajahi produk pilihan dari UMKM yang mengutamakan keberlanjutan.
           </p>
         </div>
 
-        {/* --- SEARCH BAR --- */}
-        <div className="flex justify-center w-full mt-4 mb-14">
-          <div className="relative w-full max-w-3xl">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#74C365] to-[#00804c] rounded-2xl blur-lg opacity-20" />
-            <div className="relative bg-white/90 backdrop-blur-xl rounded-xl shadow-md border px-4 h-[56px] flex items-center">
-              <Search className="text-gray-800 w-5 h-5 mr-3" />
+        {/* SEARCH BAR MATCH UMKM */}
+        <div className="flex justify-center w-full mb-16">
+          <div className="relative w-full max-w-3xl group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-[#00804c] to-[#74C365] rounded-2xl blur opacity-25 group-hover:opacity-40 transition" />
+            <div className="relative bg-white rounded-2xl shadow-xl border-2 border-transparent group-hover:border-[#74C365]/20 px-6 h-16 flex items-center transition-all">
+              <Search className="text-[#00804c] w-6 h-6 mr-4" />
               <input
                 type="text"
-                placeholder="Cari nama Produk"
+                placeholder="Cari produk eco friendly..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="flex-1 bg-transparent text-gray-800 placeholder-gray-400 focus:outline-none text-base"
+                className="flex-1 bg-transparent text-gray-800 placeholder-gray-400 focus:outline-none text-lg"
               />
+              {query && (
+                <button
+                  onClick={() => setQuery("")}
+                  className="ml-2 text-gray-400 hover:text-gray-600 text-sm font-medium"
+                >
+                  Clear
+                </button>
+              )}
             </div>
           </div>
         </div>
 
-        {/* --- STATISTICS BAR --- */}
-        <div className="max-w-4xl mx-auto mb-16 grid grid-cols-3 gap-4">
-          <StatBox
-            icon={<ShoppingBag className="w-6 h-6 text-[#00804c]" />}
-            title={filtered.length}
-            subtitle="Produk Tersedia"
+        {/* STATS MATCH UMKM */}
+        <div className="max-w-5xl mx-auto mb-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <StatCard
+            icon={<ShoppingBag className="w-7 h-7" />}
+            label="Produk Tersedia"
+            value={filtered.length.toString()}
+            gradient="from-[#00804c] to-[#74C365]"
           />
-          <StatBox
-            icon={<Leaf className="w-6 h-6 text-[#00804c]" />}
-            title="100%"
-            subtitle="Eco Friendly"
+          <StatCard
+            icon={<Leaf className="w-7 h-7" />}
+            label="Eco-Friendly"
+            value="100%"
+            gradient="from-[#74C365] to-[#DBE64C]"
           />
-          <StatBox
-            icon={<Sparkles className="w-6 h-6 text-[#00804c]" />}
-            title="Lokal"
-            subtitle="UMKM Terverifikasi"
+          <StatCard
+            icon={<Sparkles className="w-7 h-7" />}
+            label="Lokal"
+            value="UMKM"
+            gradient="from-[#DBE64C] to-[#74C365]"
           />
         </div>
 
-        {/* --- GRID PRODUK --- */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto px-6">
-          {filtered.map((product, index) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              delay={index * 50}
-            />
-          ))}
-        </div>
+        {/* LOADING STATE */}
+        {isLoading && (
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto px-6">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <div className="bg-white rounded-3xl p-6 border shadow-lg">
+                  <div className="h-48 bg-gray-200 rounded-2xl mb-4" />
+                  <div className="h-4 bg-gray-200 rounded w-20 mb-3" />
+                  <div className="h-6 bg-gray-200 rounded w-3/4 mb-2" />
+                  <div className="h-4 bg-gray-200 rounded w-full mb-2" />
+                  <div className="h-4 bg-gray-200 rounded w-2/3" />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
-        {/* --- EMPTY STATE --- */}
-        {filtered.length === 0 && (
+        {/* GRID PRODUK MATCH UMKM */}
+        {!isLoading && filtered.length > 0 && (
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto px-6">
+            {filtered.map((p, index) => (
+              <ProductCard key={p.id} index={index} product={p} />
+            ))}
+          </div>
+        )}
+
+        {/* EMPTY STATE */}
+        {!isLoading && filtered.length === 0 && (
           <div className="text-center mt-20">
-            <h3 className="text-2xl font-bold text-gray-700 mb-2">
-              Produk tidak ditemukan 😢
-            </h3>
-            <p className="text-gray-600">
-              Coba gunakan kata kunci lain atau reset pencarian
-            </p>
+            <div className="bg-white rounded-3xl p-12 max-w-lg mx-auto shadow-2xl border-2 border-gray-100">
+              <div className="text-7xl mb-6">🔍</div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">
+                Tidak Ada Produk Ditemukan
+              </h3>
+              <button
+                onClick={() => setQuery("")}
+                className="px-8 py-4 bg-gradient-to-r from-[#00804c] to-[#74C365] hover:from-[#74C365] hover:to-[#00804c] text-white rounded-xl font-bold transition-all transform hover:scale-105 shadow-lg"
+              >
+                Tampilkan Semua Produk
+              </button>
+            </div>
           </div>
         )}
       </main>
+
+      {/* Gradient Animation */}
+      <style jsx>{`
+        @keyframes gradient {
+          0%,
+          100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+        .animate-gradient {
+          background-size: 200% 200%;
+          animation: gradient 3s ease infinite;
+        }
+      `}</style>
     </div>
   );
 }
 
-/* --- STAT BOX COMPONENT --- */
-function StatBox({ icon, title, subtitle }: any) {
+/* ---------------- STAT CARD ------------------- */
+function StatCard({ icon, label, value, gradient }: any) {
   return (
-    <div className="bg-white backdrop-blur-sm rounded-2xl p-4 text-center border shadow-lg">
-      <div className="mx-auto mb-2">{icon}</div>
-      <p className="text-2xl font-bold text-gray-800">{title}</p>
-      <p className="text-sm text-gray-600">{subtitle}</p>
+    <div className="group relative">
+      <div
+        className={`absolute -inset-0.5 bg-gradient-to-r ${gradient} rounded-2xl blur opacity-30 group-hover:opacity-50 transition`}
+      />
+      <div className="relative bg-white rounded-2xl p-6 text-center border-2 border-white shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1">
+        <div
+          className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br ${gradient} text-white mb-3 shadow-lg`}
+        >
+          {icon}
+        </div>
+        <p className="text-3xl font-black bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-1">
+          {value}
+        </p>
+        <p className="text-sm text-gray-600 font-semibold uppercase tracking-wide">
+          {label}
+        </p>
+      </div>
     </div>
   );
 }
 
-/* --- PRODUCT CARD COMPONENT --- */
-function ProductCard({ product, delay }: { product: Product; delay: number }) {
-  const primary = product.images?.find((img) => img.is_primary)?.image_url;
-  const fallback = product.images?.[0]?.image_url;
+/* ---------------- PRODUCT CARD ------------------ */
+function ProductCard({ product, index }: { product: Product; index: number }) {
+  const cover =
+    product.images?.find((i) => i.is_primary)?.image_url ||
+    product.images?.[0]?.image_url ||
+    "/placeholder-product.png";
 
   return (
-    <div className="group relative" style={{ animationDelay: `${delay}ms` }}>
-      {/* Glow Effect */}
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#00804c] to-[#74C365] rounded-3xl opacity-0 group-hover:opacity-30 blur transition-all duration-500" />
+    <div
+      className="group relative rounded-3xl overflow-hidden bg-white border-2 border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+      style={{ animationDelay: `${index * 50}ms` }}
+    >
+      {/* Hover Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#00804c]/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none" />
 
-      {/* Card */}
-      <div className="relative bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl border h-full transition-all duration-500 group-hover:-translate-y-1">
-        {/* Image */}
-        <div className="h-56 overflow-hidden">
-          <Image
-            src={primary || fallback || "/placeholder-product.png"}
-            alt={product.nama_produk}
-            width={500}
-            height={400}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-        </div>
+      {/* Image */}
+      <div className="relative h-56 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+        <Image
+          src={cover}
+          alt={product.nama_produk}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-2"
+        />
+      </div>
 
-        {/* Content */}
-        <div className="p-6 flex flex-col">
-          <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-1">
-            {product.nama_produk}
-          </h3>
-          <p className="text-lg font-bold text-emerald-700 mb-4">
-            Rp {product.harga.toLocaleString("id-ID")}
-          </p>
+      {/* Content */}
+      <div className="p-6 flex flex-col">
+        <h3 className="text-xl font-black text-gray-900 line-clamp-1 mb-3 group-hover:text-[#00804c] transition-colors">
+          {product.nama_produk}
+        </h3>
 
-          <Link
-            href={`/produk/${product.id}`}
-            className="bg-[#00804c] hover:bg-[#74C365] text-white py-3 rounded-xl font-semibold text-sm shadow-lg transition-all flex items-center justify-center gap-2"
-          >
-            <span>Lihat Detail</span>
-            <span className="group-hover:translate-x-1 transition-transform">
-              →
-            </span>
-          </Link>
-        </div>
+        <p className="text-green-700 font-bold text-lg mb-5">
+          Rp {product.harga.toLocaleString("id-ID")}
+        </p>
+
+        <Link
+          href={`/produk/${product.id}`}
+          className="group/btn relative w-full bg-gradient-to-r from-[#00804c] to-[#74C365] hover:from-[#74C365] hover:to-[#00804c] text-white py-3.5 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all transform hover:scale-105 flex items-center justify-center gap-2 overflow-hidden"
+        >
+          <span className="relative z-10">Lihat Detail</span>
+          <ArrowRight className="w-4 h-4 relative z-10 group-hover/btn:translate-x-1 transition-transform" />
+          <div className="absolute inset-0 bg-white/20 translate-y-full group-hover/btn:translate-y-0 transition-transform" />
+        </Link>
       </div>
     </div>
   );

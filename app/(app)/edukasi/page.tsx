@@ -1,47 +1,121 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Menu, X } from "lucide-react";
+import {
+  Menu,
+  X,
+  Lightbulb,
+  Store,
+  BookOpen,
+  Users,
+  Leaf,
+  Sparkles,
+  ArrowRight,
+  CheckCircle2,
+} from "lucide-react";
 import Image from "next/image";
 import HeroCarousel from "@/components/heroEdukasi";
 
-type TabKey = "inspirasi" | "umkm" | "panduan" | "konsumen" | "komunitas";
+type TabKey = "inspirasi" | "umkm" | "panduan" | "komunitas";
 
-export default function EdukasiPage() {
-  const [active, setActive] = useState<TabKey>("inspirasi");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const navItems = [
+  { id: "inspirasi" as TabKey, label: "Inspirasi Hijau", icon: Lightbulb },
+  { id: "umkm" as TabKey, label: "Cerita UMKM", icon: Store },
+  { id: "panduan" as TabKey, label: "Tips & Panduan", icon: BookOpen },
+  { id: "komunitas" as TabKey, label: "Komunitas", icon: Users },
+];
 
-  const inspirasiRef = useRef<HTMLElement | null>(null);
-  const umkmRef = useRef<HTMLElement | null>(null);
-  const panduanRef = useRef<HTMLElement | null>(null);
-  const konsumenRef = useRef<HTMLElement | null>(null);
-  const komunitasRef = useRef<HTMLElement | null>(null);
-  const mentorImages = [
+const mentorImages = [
   "https://images.pexels.com/photos/3119215/pexels-photo-3119215.jpeg",
   "https://images.pexels.com/photos/1520760/pexels-photo-1520760.jpeg",
   "https://images.pexels.com/photos/25047761/pexels-photo-25047761.jpeg",
 ];
-const greenTips = [
-  "Gunakan Bahan Baku Ramah Lingkungan",
-  "Kurangi Penggunaan Plastik Sekali Pakai",
-  "Terapkan Sistem Produksi Hemat Energi",
-  "Kelola Limbah Secara Bertanggung Jawab",
-  "Digitalisasi Dokumen dan Promosi",
-  "Bangun Budaya Kerja Ramah Lingkungan",
-  "Sediakan Produk Refill atau Kemasan Isi Ulang",
-  "Pilih Supplier yang Juga Berkomitmen pada Lingkungan",
-  "Edukasi Konsumen tentang Dampak Positif Praktik Hijau"
+
+const mentorData = [
+  {
+    name: "Dr. Sarah Green",
+    role: "Environmental Activist",
+    description:
+      "Pelopor gerakan zero waste di Indonesia dengan pengalaman 15 tahun",
+  },
+  {
+    name: "Ahmad Syarif",
+    role: "Sustainable Business Coach",
+    description:
+      "Membantu 100+ UMKM bertransformasi menjadi bisnis ramah lingkungan",
+  },
+  {
+    name: "Lisa Wijaya",
+    role: "Eco-Innovation Expert",
+    description:
+      "Spesialis dalam inovasi produk berkelanjutan dan circular economy",
+  },
 ];
 
+const greenTips = [
+  {
+    title: "Gunakan Bahan Baku Ramah Lingkungan",
+    desc: "Pilih material yang dapat terurai secara alami atau berasal dari sumber berkelanjutan",
+  },
+  {
+    title: "Kurangi Penggunaan Plastik Sekali Pakai",
+    desc: "Beralih ke kemasan yang dapat digunakan ulang atau biodegradable",
+  },
+  {
+    title: "Terapkan Sistem Produksi Hemat Energi",
+    desc: "Optimalkan penggunaan energi dengan teknologi efisien dan renewable energy",
+  },
+  {
+    title: "Kelola Limbah Secara Bertanggung Jawab",
+    desc: "Implementasikan sistem daur ulang dan pengolahan limbah yang tepat",
+  },
+  {
+    title: "Digitalisasi Dokumen dan Promosi",
+    desc: "Minimalkan penggunaan kertas dengan beralih ke sistem digital",
+  },
+  {
+    title: "Bangun Budaya Kerja Ramah Lingkungan",
+    desc: "Edukasi tim tentang pentingnya praktik berkelanjutan dalam operasional",
+  },
+  {
+    title: "Sediakan Produk Refill atau Kemasan Isi Ulang",
+    desc: "Tawarkan opsi refill untuk mengurangi waste dari kemasan",
+  },
+  {
+    title: "Pilih Supplier yang Berkomitmen pada Lingkungan",
+    desc: "Jalin kerjasama dengan supplier yang memiliki nilai keberlanjutan sama",
+  },
+  {
+    title: "Edukasi Konsumen tentang Dampak Positif",
+    desc: "Komunikasikan manfaat praktik hijau kepada konsumen secara konsisten",
+  },
+];
 
+export default function EdukasiPage() {
+  const [active, setActive] = useState<TabKey>("inspirasi");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // ===== OBSERVE SCROLL =====
+  const inspirasiRef = useRef<HTMLElement | null>(null);
+  const umkmRef = useRef<HTMLElement | null>(null);
+  const panduanRef = useRef<HTMLElement | null>(null);
+  const komunitasRef = useRef<HTMLElement | null>(null);
+
+  // Detect scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Observe sections
   useEffect(() => {
     const sections: Array<[TabKey, HTMLElement | null]> = [
       ["inspirasi", inspirasiRef.current],
       ["umkm", umkmRef.current],
       ["panduan", panduanRef.current],
-      ["konsumen", konsumenRef.current],
       ["komunitas", komunitasRef.current],
     ];
 
@@ -67,188 +141,276 @@ const greenTips = [
     setMobileMenuOpen(false);
   };
 
-  const linkCls = (key: TabKey) =>
-    [
-      "relative px-3 py-2 rounded-xl font-medium transition-colors",
-      active === key ? "text-[#00804c]" : "text-gray-400 hover:text-[#74C365]",
-    ].join(" ");
-
-  const underline = (key: TabKey) => (
-    <span
-      className={[
-        "absolute left-3 right-3 -bottom-1 h-0.5 rounded-full transition-all",
-        active === key ? "bg-[#00804c] opacity-100" : "opacity-0",
-      ].join(" ")}
-    />
-  );
-
   return (
-    <div className="min-h-screen bg-[#F6F7ED] relative overflow-hidden">
-      {/* background blur */}
-      <div className="absolute top-0 -left-30 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse pointer-events-none" />
-      <div className="absolute -top-40 left-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse pointer-events-none" />
-      <div className="absolute -top-40 right-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse pointer-events-none" />
-      <div className="absolute -top-10 -right-60 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-1 animate-pulse pointer-events-none" />
+    <div className="min-h-screen bg-gradient-to-br from-[#F6F7ED] via-[#F6F7ED] to-[#E8F5E9]">
+      {/* Enhanced Background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-[#74C365]/20 to-[#DBE64C]/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-gradient-to-br from-[#00804c]/10 to-[#74C365]/10 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-gradient-to-br from-[#DBE64C]/15 to-[#74C365]/15 rounded-full blur-3xl animate-pulse delay-2000" />
+      </div>
 
-      {/* ===== Sticky SubNav ===== */}
-      <header className="mt-30 relative z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="h-16 flex items-center justify-center">
-            <nav className="hidden md:flex items-center gap-6 backdrop-blur-lg rounded-2xl px-4 py-2 z-0">
+      {/* Enhanced Sticky Navigation */}
+      <header className="relative z-50 mt-20">
+        <div
+          className={`sticky top-0 transition-all duration-300 ${
+            isScrolled
+              ? "backdrop-blur-xl bg-white/80 border-b border-gray-200/50 shadow-lg"
+              : "bg-transparent"
+          }`}
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="h-20 flex items-center justify-between">
+              {/* Logo for mobile */}
+              <div className="flex items-center gap-2 md:hidden">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#00804c] to-[#74C365] flex items-center justify-center">
+                  <Leaf className="w-5 h-5 text-white" />
+                </div>
+                <span className="font-bold text-[#00804c] text-lg">
+                  Edukasi
+                </span>
+              </div>
+
+              {/* Desktop Navigation */}
+              <nav className="hidden md:flex items-center gap-2 mx-auto">
+                {navItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = active === item.id;
+
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollTo(item.id)}
+                      className={`group relative flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
+                        isActive
+                          ? "bg-gradient-to-r from-[#00804c] to-[#74C365] text-white shadow-lg scale-105"
+                          : "text-gray-600 hover:bg-gray-100 hover:text-[#00804c]"
+                      }`}
+                    >
+                      <Icon
+                        className={`w-4 h-4 transition-transform duration-300 ${
+                          isActive ? "scale-110" : "group-hover:scale-110"
+                        }`}
+                      />
+                      <span>{item.label}</span>
+
+                      {!isActive && (
+                        <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-[#00804c] to-[#74C365] rounded-full transition-all duration-300 group-hover:w-3/4" />
+                      )}
+                    </button>
+                  );
+                })}
+              </nav>
+
+              {/* Mobile Menu Button */}
               <button
-                onClick={() => scrollTo("inspirasi")}
-                className={linkCls("inspirasi")}
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className={`md:hidden relative inline-flex items-center justify-center rounded-xl p-2.5 transition-all duration-300 ${
+                  mobileMenuOpen
+                    ? "bg-gradient-to-r from-[#00804c] to-[#74C365] text-white"
+                    : "bg-white text-gray-600 hover:bg-gray-50"
+                } shadow-lg`}
               >
-                Inspirasi Hijau
-                {underline("inspirasi")}
+                <div className="relative w-6 h-6">
+                  <Menu
+                    className={`absolute inset-0 transition-all duration-300 ${
+                      mobileMenuOpen
+                        ? "opacity-0 rotate-90"
+                        : "opacity-100 rotate-0"
+                    }`}
+                  />
+                  <X
+                    className={`absolute inset-0 transition-all duration-300 ${
+                      mobileMenuOpen
+                        ? "opacity-100 rotate-0"
+                        : "opacity-0 -rotate-90"
+                    }`}
+                  />
+                </div>
               </button>
-
-              <button
-                onClick={() => scrollTo("umkm")}
-                className={linkCls("umkm")}
-              >
-                Cerita UMKM
-                {underline("umkm")}
-              </button>
-
-              <button
-                onClick={() => scrollTo("panduan")}
-                className={linkCls("panduan")}
-              >
-                Tips Ramah Lingkungan
-                {underline("panduan")}
-              </button>
-
-              <button
-                onClick={() => scrollTo("komunitas")}
-                className={linkCls("komunitas")}
-              >
-                Komunitas Hijau
-                {underline("komunitas")}
-              </button>
-            </nav>
-
-            {/* Mobile Toggle */}
-            <button
-              onClick={() => setMobileMenuOpen((s) => !s)}
-              className="md:hidden inline-flex items-center justify-center rounded-xl border border-white/60 bg-white/80 backdrop-blur-lg px-3 py-2 text-gray-400"
-            >
-              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
-          </div>
-
-          {mobileMenuOpen && (
-            <div className="md:hidden bg-white/90 backdrop-blur-xl shadow rounded-2xl overflow-hidden mb-4">
-              {[
-                ["inspirasi", "Inspirasi Hijau"],
-                ["umkm", "Cerita UMKM"],
-                ["panduan", "Tips Ramah Lingkungan"],
-                ["komunitas", "Komunitas Hijau"],
-              ].map(([k, label]) => (
-                <button
-                  key={k}
-                  onClick={() => scrollTo(k as TabKey)}
-                  className={`w-full px-4 py-3 text-left ${
-                    active === k
-                      ? "text-[#00804c] font-semibold"
-                      : "text-gray-700"
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
             </div>
-          )}
+
+            {/* Mobile Menu */}
+            <div
+              className={`md:hidden overflow-hidden transition-all duration-300 ${
+                mobileMenuOpen ? "max-h-96 mb-4" : "max-h-0"
+              }`}
+            >
+              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                {navItems.map((item, index) => {
+                  const Icon = item.icon;
+                  const isActive = active === item.id;
+
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollTo(item.id)}
+                      className={`w-full flex items-center gap-3 px-6 py-4 text-left transition-all duration-300 ${
+                        isActive
+                          ? "bg-gradient-to-r from-[#00804c] to-[#74C365] text-white font-bold"
+                          : "text-gray-700 hover:bg-gray-50"
+                      } ${index !== 0 ? "border-t border-gray-100" : ""}`}
+                    >
+                      <div
+                        className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${
+                          isActive
+                            ? "bg-white/20"
+                            : "bg-gradient-to-br from-[#00804c]/10 to-[#74C365]/10"
+                        }`}
+                      >
+                        <Icon
+                          className={`w-5 h-5 ${
+                            isActive ? "text-white" : "text-[#00804c]"
+                          }`}
+                        />
+                      </div>
+                      <span className="flex-1">{item.label}</span>
+                      {isActive && (
+                        <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
       </header>
 
-      {/* =====================================================
-         SECTION: INSPIRASI HIJAU
-      ===================================================== */}
+      {/* Hero Section */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-12 pb-20">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* Left Content */}
+          <div className="space-y-6">
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#00804c] to-[#74C365] rounded-full shadow-lg">
+              <Sparkles className="w-5 h-5 text-white animate-pulse" />
+              <span className="text-sm font-bold text-white tracking-wide">
+                Platform Edukasi Berkelanjutan
+              </span>
+            </div>
 
-      <div className="max-w-6xl grid mt-15 mb-15 md:grid-cols-2 gap-8 px-4 mx-auto">
-        <div className="flex flex-col justify-center">
-          <h2 className="text-5xl font-bold font-['Helvetica'] relative z-10 p-6">
-            <span className="bg-gradient-to-br from-[#00804c] to-[#1E488F] bg-clip-text text-transparent">
-              Learn, Grow,{" "}
-            </span>
-          </h2>
-          <h2 className="text-5xl font-bold font-['Helvetica'] relative z-10 p-6">
-            <span className="bg-gradient-to-br from-[#00804c] to-[#1E488F] bg-clip-text text-transparent">
-              Be Green with
-            </span>
-          </h2>
-          <img src="/images/gifhlmbgs.gif" />
-        </div>
-        <div className="flex flex-col grid md:grid-cols-2 justify-center p-6">
-          <div className="p-6">
-            <img
-              src="/images/edu1.png"
-              className="rounded-2xl shadow transition hover:shadow-xl hover:scale-110"
-            />
-          </div>
-          <div>
-            <div className="p-6">
+            <h1 className="text-5xl md:text-7xl font-black leading-tight">
+              <span className="bg-gradient-to-r from-[#00804c] to-[#74C365] bg-clip-text text-transparent">
+                Learn, Grow,
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-[#74C365] to-[#DBE64C] bg-clip-text text-transparent">
+                Be Green
+              </span>
+            </h1>
+
+            <p className="text-xl text-gray-700 leading-relaxed">
+              Temukan inspirasi, tips, dan panduan praktis untuk membangun
+              bisnis yang berkelanjutan dan ramah lingkungan
+            </p>
+
+            <div className="relative w-64 h-64">
               <img
-                src="/images/edu2.png"
-                className="rounded-2xl shadow transition hover:shadow-xl hover:scale-110"
+                src="/images/gifhlmbgs.gif"
+                alt="ECOsrot"
+                className="w-full h-full object-contain"
               />
             </div>
-            <div className="p-6">
-              <img
-                src="/images/edu3.png"
-                className="rounded-2xl shadow transition hover:shadow-xl hover:scale-110"
-              />
+          </div>
+
+          {/* Right Content - Image Grid */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-4">
+              <div className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#00804c] to-[#74C365] rounded-2xl blur opacity-25 group-hover:opacity-40 transition" />
+                <img
+                  src="/images/edu1.png"
+                  alt="Edu 1"
+                  className="relative w-full rounded-2xl transform group-hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+            </div>
+            <div className="space-y-4 pt-8">
+              <div className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#74C365] to-[#DBE64C] rounded-2xl blur opacity-25 group-hover:opacity-40 transition" />
+                <img
+                  src="/images/edu2.png"
+                  alt="Edu 2"
+                  className="relative w-full rounded-2xl transform group-hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+              <div className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#DBE64C] to-[#74C365] rounded-2xl blur opacity-25 group-hover:opacity-40 transition" />
+                <img
+                  src="/images/edu3.png"
+                  alt="Edu 3"
+                  className="relative w-full rounded-2xl transform group-hover:scale-110 transition-transform duration-500"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <section id="inspirasi" ref={inspirasiRef} className="scroll-mt-10 py-20">
+      {/* Inspirasi Hijau Section */}
+      <section
+        id="inspirasi"
+        ref={inspirasiRef}
+        className="scroll-mt-28 relative z-10"
+      >
         <div
-          className="gap-6 bg-cover bg-center"
+          className="bg-cover bg-center py-20"
           style={{ backgroundImage: "url('/images/bgrumput.png')" }}
         >
-          <h2
-            className="text-4xl p-10 text-[#F6F7ED] text-center font-bold"
-            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
-          >
-            Inspirasi Hijau
-          </h2>
-          <div className="mb-12 max-w-6xl mx-auto grid md:grid-cols-3 mt-6 gap-8 px-4">
-            {[1, 2, 3].map((i) => (
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/90 backdrop-blur rounded-full mb-6 shadow-lg">
+              <Lightbulb className="w-5 h-5 text-[#00804c]" />
+              <span className="text-sm font-bold text-[#00804c] tracking-wide">
+                Tokoh Inspiratif
+              </span>
+            </div>
+            <h2 className="text-5xl md:text-6xl font-black text-white drop-shadow-lg">
+              Inspirasi Hijau
+            </h2>
+          </div>
+
+          <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12 px-6">
+            {mentorImages.map((img, i) => (
               <div
                 key={i}
-                className="relative group cursor-pointer hover:-translate-y-1 transition mb-20"
+                className="group relative"
+                style={{ animationDelay: `${i * 100}ms` }}
               >
-                {/* Image on top */}
-                <div className="w-full flex justify-center">
-                  <Image
-                    src={mentorImages[i - 1]} 
-                    width={300}
-                    height={300}
-                    alt="mentor"
-                    className="rounded-full"
-                  />
+                <div className="relative">
+                  {/* Image Container */}
+                  <div className="relative w-full aspect-square">
+                    <div className="absolute -inset-2 bg-gradient-to-r from-[#00804c] to-[#74C365] rounded-full blur opacity-30 group-hover:opacity-50 transition" />
+                    <Image
+                      src={img}
+                      width={300}
+                      height={300}
+                      alt={mentorData[i].name}
+                      className="relative w-full h-full object-cover rounded-full border-4 border-white shadow-2xl group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+
+                  {/* Hover Card */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="bg-gradient-to-br from-[#00804c] to-[#74C365] rounded-full w-[90%] h-[90%] flex flex-col items-center justify-center p-8 text-center shadow-2xl">
+                      <h3 className="text-white text-2xl font-bold mb-2">
+                        {mentorData[i].name}
+                      </h3>
+                      <p className="text-white/90 text-sm font-semibold mb-3">
+                        {mentorData[i].role}
+                      </p>
+                      <p className="text-white/80 text-xs leading-relaxed">
+                        {mentorData[i].description}
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Hidden content that appears on hover */}
-                <div
-                  className="
-  absolute 
-  top-1/2 left-1/2 
-  -translate-x-1/2 -translate-y-1/2
-  w-[250px] h-[250px]
-  bg-[#74C365] p-6 shadow 
-  flex flex-col items-center justify-center 
-  opacity-0 group-hover:opacity-100 
-  transition-opacity duration-300 
-  rounded-full
-"
-                >
-                  <h3 className="text-[#F6F7ED] text-lg font-semibold text-center">
-                    Figur Hijau {i}
+                {/* Info Card Below */}
+                <div className="mt-6 bg-white rounded-2xl p-6 shadow-xl group-hover:shadow-2xl transition-all">
+                  <h3 className="text-xl font-bold text-[#00804c] mb-1">
+                    {mentorData[i].name}
                   </h3>
+                  <p className="text-gray-600 text-sm">{mentorData[i].role}</p>
                 </div>
               </div>
             ))}
@@ -256,98 +418,166 @@ const greenTips = [
         </div>
       </section>
 
-      {/* =====================================================
-         SECTION: CERITA UMKM
-      ===================================================== */}
+      {/* Cerita UMKM Section */}
       <section
         id="umkm"
         ref={umkmRef}
-        className="scroll-mt-28 mb-40"
+        className="scroll-mt-28 py-20 relative z-10"
       >
-        <h2 className="text-4xl font-bold text-[#00804c] text-center mb-10">
-          Cerita UMKM
-        </h2>
-        <HeroCarousel />
-
-        {/* <div className="max-w-6xl mx-auto gap-10 px-4">
-          {[1, 2].map((i) => (
-            <div
-              key={i}
-              className="bg-white grid md:grid-cols-2 rounded-xl overflow-hidden shadow hover:shadow-xl transition"
-            >
-              <Image
-                src="/images/bgvisi.png"
-                width={800}
-                height={500}
-                alt="umkm"
-                className="w-full"
-              />
-              <div className="p-6">
-                <h3 className="font-semibold text-xl text-[#00804c]">
-                  UMKM Hijau {i}
-                </h3>
-                <p className="text-gray-600 text-sm mt-3">
-                  Kisah pelaku UMKM yang berhasil menerapkan praktik ramah
-                  lingkungan.
-                </p>
-              </div>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#00804c] to-[#74C365] rounded-full mb-6 shadow-lg">
+              <Store className="w-5 h-5 text-white" />
+              <span className="text-sm font-bold text-white tracking-wide">
+                Success Stories
+              </span>
             </div>
-          ))}
-        </div> */}
-      </section>
+            <h2 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-[#00804c] to-[#74C365] bg-clip-text text-transparent">
+              Cerita UMKM
+            </h2>
+            <p className="text-xl text-gray-600 mt-4 max-w-2xl mx-auto">
+              Kisah inspiratif dari pelaku UMKM yang berhasil menerapkan praktik
+              berkelanjutan
+            </p>
+          </div>
 
-      {/* =====================================================
-         SECTION: TIPS & PANDUAN
-      ===================================================== */}
-      <section
-        id="panduan"
-        ref={panduanRef}
-        className="scroll-mt-28 py-20 bg-[url('/images/bgtips.png')] bg-cover bg-center bg-fixed"
-      >
-        <h2 className="text-4xl font-bold text-white text-center mb-10 drop-shadow-lg">
-          Tips Ramah Lingkungan
-        </h2>
-
-        <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-          {[...Array(9)].map((_, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-xl p-6 shadow hover:shadow-xl hover:-translate-y-1 transition"
-            >
-              <Image
-                src={`/images/tips/${i+1}.png`}
-                width={800}
-                height={500}
-                alt="tips"
-                className="w-full mb-6"
-              />
-              <p className="text-gray-500">Tips #{i + 1}</p>
-              <h1 className="text-[#00804c]  font-semibold text-2xl">{greenTips[i]}</h1>
-            </div>
-          ))}
+          <HeroCarousel />
         </div>
       </section>
 
-      {/* =====================================================
-         SECTION: KOMUNITAS HIJAU
-      ===================================================== */}
+      {/* Tips & Panduan Section */}
+      <section
+        id="panduan"
+        ref={panduanRef}
+        className="scroll-mt-28 py-20 relative z-10"
+        style={{
+          backgroundImage: "url('/images/bgtips.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/90 backdrop-blur rounded-full mb-6 shadow-lg">
+              <BookOpen className="w-5 h-5 text-[#00804c]" />
+              <span className="text-sm font-bold text-[#00804c] tracking-wide">
+                Panduan Praktis
+              </span>
+            </div>
+            <h2 className="text-5xl md:text-6xl font-black text-white drop-shadow-lg mb-4">
+              Tips Ramah Lingkungan
+            </h2>
+            <p className="text-xl text-white/90 max-w-2xl mx-auto drop-shadow">
+              Panduan lengkap untuk menjalankan bisnis yang berkelanjutan dan
+              ramah lingkungan
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {greenTips.map((tip, i) => (
+              <div
+                key={i}
+                className="group relative"
+                style={{ animationDelay: `${i * 50}ms` }}
+              >
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#00804c] to-[#74C365] rounded-2xl blur opacity-25 group-hover:opacity-40 transition" />
+                <div className="relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all">
+                  {/* Image */}
+                  <div className="relative h-48 overflow-hidden">
+                    <Image
+                      src={`/images/tips/${i + 1}.png`}
+                      width={800}
+                      height={500}
+                      alt={tip.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-gradient-to-br from-[#00804c] to-[#74C365] flex items-center justify-center shadow-lg">
+                      <span className="text-white font-bold text-lg">
+                        {i + 1}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6">
+                    <div className="flex items-start gap-3 mb-3">
+                      <CheckCircle2 className="w-6 h-6 text-[#00804c] flex-shrink-0 mt-1" />
+                      <h3 className="text-lg font-bold text-[#00804c] leading-tight">
+                        {tip.title}
+                      </h3>
+                    </div>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      {tip.desc}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Komunitas Section */}
       <section
         id="komunitas"
         ref={komunitasRef}
-        className="scroll-mt-28 py-24 bg-[#F6F7ED] bg-cover bg-center"
+        className="scroll-mt-28 py-24 relative z-10"
       >
-        <div className="text-center max-w-4xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-[#00804c] drop-shadow mb-4">
-            Komunitas Hijau
-          </h2>
-          <p className="text-gray-500 max-w-lg mx-auto mb-6">
-            Bergabung dalam komunitas peduli lingkungan untuk berbagi ide,
-            dampak, dan aksi nyata.
-          </p>
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="group relative">
+            <div className="absolute -inset-1 bg-gradient-to-r from-[#00804c] to-[#74C365] rounded-3xl blur opacity-25 group-hover:opacity-40 transition" />
+            <div className="relative bg-white rounded-3xl p-12 md:p-16 text-center shadow-2xl border-2 border-white">
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#00804c] to-[#74C365] rounded-full mb-8 shadow-lg">
+                <Users className="w-5 h-5 text-white" />
+                <span className="text-sm font-bold text-white tracking-wide">
+                  Join Us
+                </span>
+              </div>
 
-          <button className="px-6 py-3 bg-white text-[#00804c] font-semibold rounded-xl shadow hover:bg-[#74C365] hover:text-[#F6F7ED] transition">
-            Gabung Sekarang
-          </button>
+              <h2 className="text-4xl md:text-6xl font-black bg-gradient-to-r from-[#00804c] to-[#74C365] bg-clip-text text-transparent mb-6">
+                Komunitas Hijau
+              </h2>
+
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+                Bergabung dengan ribuan pelaku bisnis dan aktivis lingkungan
+                untuk berbagi ide, pengalaman, dan menciptakan dampak nyata
+                bersama-sama
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button className="group/btn px-8 py-4 bg-gradient-to-r from-[#00804c] to-[#74C365] hover:from-[#74C365] hover:to-[#00804c] text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+                  Gabung Sekarang
+                  <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                </button>
+                <button className="px-8 py-4 bg-white border-2 border-[#00804c] text-[#00804c] hover:bg-[#00804c] hover:text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
+                  Pelajari Lebih Lanjut
+                </button>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-3 gap-6 mt-12 pt-12 border-t border-gray-200">
+                <div>
+                  <p className="text-4xl font-black bg-gradient-to-r from-[#00804c] to-[#74C365] bg-clip-text text-transparent mb-2">
+                    5K+
+                  </p>
+                  <p className="text-gray-600 font-semibold">Anggota Aktif</p>
+                </div>
+                <div>
+                  <p className="text-4xl font-black bg-gradient-to-r from-[#00804c] to-[#74C365] bg-clip-text text-transparent mb-2">
+                    100+
+                  </p>
+                  <p className="text-gray-600 font-semibold">Event Bulanan</p>
+                </div>
+                <div>
+                  <p className="text-4xl font-black bg-gradient-to-r from-[#00804c] to-[#74C365] bg-clip-text text-transparent mb-2">
+                    50+
+                  </p>
+                  <p className="text-gray-600 font-semibold">Kota</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>

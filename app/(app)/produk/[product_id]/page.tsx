@@ -64,15 +64,8 @@ export default function ProductDetailPage() {
   if (!product)
     return <p className="text-center mt-10 text-gray-500">Memuat data...</p>;
 
-  const subnavItems = [
-    { id: "deskripsi", label: "Deskripsi" },
-    { id: "info", label: "Informasi Penting" },
-    { id: "ulasan", label: "Ulasan" },
-    { id: "lainnya", label: "Produk Lainnya" },
-  ];
-
   return (
-    <div className="min-h-screen bg-[#F6F7ED] relative overflow-hidden">
+    <div className="min-h-screen bg-[#F6F7ED] relative overflow-hidden ">
       <div className="absolute inset-0 z-0">
         <div
           className="absolute top-0 -left-30 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
@@ -91,32 +84,7 @@ export default function ProductDetailPage() {
           style={{ animationDuration: "6s", animationDelay: "2s" }}
         />
       </div>
-      <div className="relative z-10">
-        <header className="mt-30">
-          <div className="sticky top-0 z-40">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="h-16 flex items-center justify-center">
-                <nav className="hidden md:flex items-center gap-6 backdrop-blur-lg rounded-2xl px-4 py-2">
-                  {subnavItems.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollTo(item.id)}
-                      className={`relative font-semibold text-lg tracking-wide transition-all duration-300 pb-1
-      ${active === item.id ? "text-[#00804c]" : "text-gray-400"}
-      after:content-[''] after:absolute after:left-0 after:-bottom-[2px] after:h-[2px]
-      after:bg-[#00804c] after:rounded-full after:transition-all after:duration-300 hover:text-[#74C365]
-      ${active === item.id ? "after:w-full" : ""}
-    `}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </nav>
-              </div>
-            </div>
-          </div>
-        </header>
-
+      <div className="relative z-10 mt-40">
         {/* 🟢 Header Produk */}
         <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg border border-gray-100 p-8 mt-6">
           <div className="grid md:grid-cols-2 gap-8">

@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Search, Sparkles, TrendingUp, Award } from "lucide-react";
+import { useEffect, useState, useMemo } from "react";
+import {
+  Search,
+  Sparkles,
+  TrendingUp,
+  Award,
+  MapPin,
+  ArrowRight,
+} from "lucide-react";
 import Link from "next/link";
 
 interface Umkm {
@@ -15,232 +22,241 @@ interface Umkm {
 export default function UmkmPage() {
   const [umkmList, setUmkmList] = useState<Umkm[]>([]);
   const [query, setQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      console.log("Fetching UMKM data...");
-      const res = await fetch("/api/umkm/read");
-      const json = await res.json();
-      if (json.success) setUmkmList(json.data);
-    };
-    fetchData();
+    fetch("/api/umkm/read")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) setUmkmList(json.data);
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
-  const filteredList = umkmList.filter(
-    (item) =>
-      item.name.toLowerCase().includes(query.toLowerCase()) ||
-      item.Kategori_usaha.toLowerCase().includes(query.toLowerCase())
+  const filteredList = useMemo(
+    () =>
+      umkmList.filter(
+        (item) =>
+          item.name.toLowerCase().includes(query.toLowerCase()) ||
+          item.Kategori_usaha.toLowerCase().includes(query.toLowerCase())
+      ),
+    [umkmList, query]
   );
 
   return (
-    <div className="min-h-screen bg-[#F6F7ED] relative overflow-hidden">
-      {/* Decorative Background Elements */}
-      <div
-        className="absolute top-0 -left-30 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
-        style={{ animationDuration: "6s", animationDelay: "2s" }}
-      />
-      <div
-        className="absolute -top-40 left-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
-        style={{ animationDuration: "6s", animationDelay: "3s" }}
-      />
-      <div
-        className="absolute -top-40 right-30 w-96 h-96 bg-[#DBE64C] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse"
-        style={{ animationDuration: "6s", animationDelay: "1s" }}
-      />
-      <div
-        className="absolute -top-10 -right-40 w-96 h-96 bg-[#74C365] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"
-        style={{ animationDuration: "6s", animationDelay: "2s" }}
-      />
+    <div className="min-h-screen bg-gradient-to-br from-[#F6F7ED] via-[#F6F7ED] to-[#E8F5E9]">
+      {/* Enhanced Background Effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-[#74C365]/20 to-[#DBE64C]/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-gradient-to-br from-[#00804c]/10 to-[#74C365]/10 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-gradient-to-br from-[#DBE64C]/15 to-[#74C365]/15 rounded-full blur-3xl animate-pulse delay-2000" />
+      </div>
 
-      <div className="relative z-10 pt-32 pb-20 px-4">
-        {/* Hero Header */}
-        <div className="text-center mb-16 max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#74C365] rounded-full mb-6 animate-bounce">
-            <Sparkles className="w-4 h-4 text-[#F6F7ED]" />
-            <span className="text-sm font-semibold text-[#F6F7ED]">
-              Lebih dari 9+ UMKM Terdaftar
+      <div className="relative z-10 pt-24 pb-20 px-4">
+        {/* Hero Section with Enhanced Typography */}
+        <div className="text-center mb-12 max-w-5xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#00804c] to-[#74C365] rounded-full mb-8 shadow-lg hover:shadow-xl transition-shadow">
+            <Sparkles className="w-5 h-5 text-white animate-pulse" />
+            <span className="text-sm font-bold text-white tracking-wide">
+              {umkmList.length}+ UMKM Terdaftar & Terverifikasi
             </span>
           </div>
 
-          <h1 className="text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#00804c] to-[#74C365] mb-6 leading-tight">
-            Temukan UMKM
+          <h1 className="text-6xl md:text-8xl font-black mb-6 leading-none">
+            <span className="bg-gradient-to-r from-[#00804c] via-[#74C365] to-[#00804c] bg-clip-text text-transparent animate-gradient">
+              Temukan UMKM
+            </span>
             <br />
-            <span className="text-5xl md:text-6xl">Ramah Lingkungan 🌿</span>
+            <span className="text-5xl md:text-7xl bg-gradient-to-r from-[#74C365] to-[#DBE64C] bg-clip-text text-transparent">
+              Ramah Lingkungan 🌿
+            </span>
           </h1>
 
-          <p className="text-gray-600 text-xl max-w-2xl mx-auto leading-relaxed">
-            Dukung bisnis lokal yang peduli lingkungan dan berdampak positif
-            untuk masa depan yang lebih hijau
+          <p className="text-gray-700 text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed font-medium">
+            Dukung produk lokal yang peduli lingkungan dan berkontribusi untuk
+            masa depan yang lebih hijau
           </p>
         </div>
 
-        {/* Search + Filter Section */}
-        <div className="flex justify-center w-full mt-4 mb-14">
-          <div className="flex items-center gap-4 w-full max-w-4xl">
-            <div className="relative flex-1">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#74C365] to-[#00804c] rounded-2xl blur-lg opacity-20" />
-              <div className="relative bg-white/90 backdrop-blur-xl rounded-xl shadow-md border border-gray-200 px-4 h-[56px] flex items-center">
-                <Search className="text-gray-800 w-5 h-5 mr-3" />
-                <input
-                  type="text"
-                  placeholder="Cari UMKM atau kategori usaha..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="flex-1 bg-transparent text-gray-800 placeholder-gray-400 focus:outline-none text-base"
-                />
-              </div>
-            </div>
-
-            <div className="relative">
-              <select
+        {/* Enhanced Search Bar */}
+        <div className="flex justify-center w-full mb-16">
+          <div className="relative w-full max-w-3xl group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-[#00804c] to-[#74C365] rounded-2xl blur opacity-25 group-hover:opacity-40 transition" />
+            <div className="relative bg-white rounded-2xl shadow-xl border-2 border-transparent group-hover:border-[#74C365]/20 px-6 h-16 flex items-center transition-all">
+              <Search className="text-[#00804c] w-6 h-6 mr-4" />
+              <input
+                type="text"
+                placeholder="Cari UMKM berdasarkan nama atau kategori..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="
-          appearance-none
-          bg-white/90 backdrop-blur-xl
-          rounded-xl
-          border border-gray-200
-          shadow-md
-          text-gray-700 text-base font-medium
-          h-[56px]
-          pl-4 pr-10
-          w-[220px]
-          focus:ring-2 focus:ring-[#00804c]/40
-          cursor-pointer
-        "
-              >
-                <option value="">Semua Kategori</option>
-                {[...new Set(umkmList.map((u) => u.Kategori_usaha))].map(
-                  (cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  )
-                )}
-              </select>
-
-              {/* arrow icon */}
-              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">
-                <svg
-                  width="16"
-                  height="16"
-                  fill="none"
-                  stroke="#00804c"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  viewBox="0 0 24 24"
+                className="flex-1 bg-transparent text-gray-800 placeholder-gray-400 focus:outline-none text-lg"
+              />
+              {query && (
+                <button
+                  onClick={() => setQuery("")}
+                  className="ml-2 text-gray-400 hover:text-gray-600 text-sm font-medium"
                 >
-                  <path d="M6 9l6 6 6-6" />
-                </svg>
-              </div>
+                  Clear
+                </button>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Stats Bar */}
-        <div className="max-w-4xl mx-auto mb-16 grid grid-cols-3 gap-4">
-          <div className="bg-white backdrop-blur-sm rounded-2xl p-4 text-center border border-white/40 shadow-lg">
-            <TrendingUp className="w-6 h-6 text-[#00804c] mx-auto mb-2" />
-            <p className="text-2xl font-bold text-gray-800">
-              {filteredList.length}
-            </p>
-            <p className="text-sm text-gray-600">UMKM Tersedia</p>
-          </div>
-          <div className="bg-white backdrop-blur-sm rounded-2xl p-4 text-center border border-white/40 shadow-lg">
-            <Award className="w-6 h-6 text-[#00804c] mx-auto mb-2" />
-            <p className="text-2xl font-bold text-gray-800">100%</p>
-            <p className="text-sm text-gray-600">Eco-Friendly</p>
-          </div>
-          <div className="bg-white backdrop-blur-sm rounded-2xl p-4 text-center border border-white/40 shadow-lg">
-            <Sparkles className="w-6 h-6 text-[#00804c] mx-auto mb-2" />
-            <p className="text-2xl font-bold text-gray-800">Lokal</p>
-            <p className="text-sm text-gray-600">Produk Asli</p>
-          </div>
+        {/* Enhanced Stats Cards */}
+        <div className="max-w-5xl mx-auto mb-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <StatCard
+            icon={<TrendingUp className="w-7 h-7" />}
+            label="UMKM Tersedia"
+            value={filteredList.length.toString()}
+            gradient="from-[#00804c] to-[#74C365]"
+          />
+          <StatCard
+            icon={<Award className="w-7 h-7" />}
+            label="Eco-Friendly"
+            value="100%"
+            gradient="from-[#74C365] to-[#DBE64C]"
+          />
+          <StatCard
+            icon={<MapPin className="w-7 h-7" />}
+            label="Produk"
+            value="Lokal"
+            gradient="from-[#DBE64C] to-[#74C365]"
+          />
         </div>
 
-        {/* Grid UMKM */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto px-6">
-          {filteredList.map((umkm, index) => (
-            <div
-              key={umkm.id}
-              className="group relative"
-              style={{ animationDelay: `${index * 50}ms` }}
-            >
-              {/* Glow Effect */}
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#00804c] to-[#00804c] rounded-3xl opacity-0 group-hover:opacity-30 blur transition-all duration-500" />
-
-              {/* Card */}
-              <div className="relative bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/50 h-full flex flex-col">
-                {/* Image Container */}
-                <div className="relative overflow-hidden h-56">
-                  <img
-                    src={umkm.image_url}
-                    alt={umkm.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
-
-                  {/* Floating Badge */}
-                  <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg">
-                    <span className="text-xs font-bold text-[#00804c] flex items-center gap-1">
-                      <span className="w-2 h-2 bg-[#00804c] rounded-full animate-pulse" />
-                      Verified
-                    </span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-6 flex-1 flex flex-col">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl mb-4 self-start border border-[#00804c]">
-                    <span className="text-xs font-bold text-emerald-700 uppercase tracking-wide">
-                      {umkm.Kategori_usaha}
-                    </span>
-                  </div>
-
-                  <h2 className="text-2xl font-bold text-gray-900 mb-3 transition-colors line-clamp-1">
-                    {umkm.name}
-                  </h2>
-
-                  <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-6 flex-1">
-                    {umkm.description}
-                  </p>
-
-                  <Link
-                    href={`/umkm/${umkm.id}`}
-                    className="w-full bg-[#00804c] hover:bg-[#74C365] text-white py-3.5 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2"
-                  >
-                    <span>Lihat Detail</span>
-                    <span className="group-hover:translate-x-1 transition-transform">
-                      →
-                    </span>
-                  </Link>
+        {/* Loading State */}
+        {isLoading && (
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto px-6">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <div className="bg-white rounded-3xl p-6 border shadow-lg">
+                  <div className="h-48 bg-gray-200 rounded-2xl mb-4" />
+                  <div className="h-4 bg-gray-200 rounded w-20 mb-3" />
+                  <div className="h-6 bg-gray-200 rounded w-3/4 mb-2" />
+                  <div className="h-4 bg-gray-200 rounded w-full mb-2" />
+                  <div className="h-4 bg-gray-200 rounded w-2/3" />
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
-        {/* Empty State */}
-        {filteredList.length === 0 && (
-          <div className="text-center mt-24">
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto shadow-2xl border border-white/50">
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-2">
-                Tidak Ada Hasil
+        {/* UMKM Grid with Enhanced Cards */}
+        {!isLoading && filteredList.length > 0 && (
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto px-6">
+            {filteredList.map((umkm, index) => (
+              <UmkmCard key={umkm.id} umkm={umkm} index={index} />
+            ))}
+          </div>
+        )}
+
+        {/* Enhanced Empty State */}
+        {!isLoading && filteredList.length === 0 && (
+          <div className="text-center mt-20">
+            <div className="bg-white rounded-3xl p-12 max-w-lg mx-auto shadow-2xl border-2 border-gray-100">
+              <div className="text-7xl mb-6">🔍</div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">
+                Tidak Ada Hasil Ditemukan
               </h3>
-              <p className="text-gray-600">
-                Coba kata kunci lain atau hapus filter pencarian
+              <p className="text-gray-600 mb-6">
+                Coba kata kunci lain atau lihat semua UMKM
               </p>
               <button
                 onClick={() => setQuery("")}
-                className="mt-6 px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+                className="px-8 py-4 bg-gradient-to-r from-[#00804c] to-[#74C365] hover:from-[#74C365] hover:to-[#00804c] text-white rounded-xl font-bold transition-all transform hover:scale-105 shadow-lg"
               >
-                Reset Pencarian
+                Tampilkan Semua UMKM
               </button>
             </div>
           </div>
         )}
+      </div>
+
+      <style jsx>{`
+        @keyframes gradient {
+          0%,
+          100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+        .animate-gradient {
+          background-size: 200% 200%;
+          animation: gradient 3s ease infinite;
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function StatCard({ icon, label, value, gradient }: any) {
+  return (
+    <div className="group relative">
+      <div
+        className={`absolute -inset-0.5 bg-gradient-to-r ${gradient} rounded-2xl blur opacity-30 group-hover:opacity-50 transition`}
+      />
+      <div className="relative bg-white rounded-2xl p-6 text-center border-2 border-white shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1">
+        <div
+          className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br ${gradient} text-white mb-3 shadow-lg`}
+        >
+          {icon}
+        </div>
+        <p className="text-3xl font-black bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-1">
+          {value}
+        </p>
+        <p className="text-sm text-gray-600 font-semibold uppercase tracking-wide">
+          {label}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function UmkmCard({ umkm, index }: { umkm: Umkm; index: number }) {
+  return (
+    <div
+      className="group relative rounded-3xl overflow-hidden bg-white border-2 border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+      style={{ animationDelay: `${index * 50}ms` }}
+    >
+      {/* Gradient Overlay on Hover */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#00804c]/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none" />
+
+      {/* Image Container */}
+      <div className="relative h-56 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+        <img
+          src={umkm.image_url}
+          alt={umkm.name}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-2"
+        />
+        {/* Category Badge on Image */}
+        <div className="absolute top-4 left-4 z-20">
+          <span className="inline-block text-xs font-bold bg-white/95 backdrop-blur text-[#00804c] px-3 py-1.5 rounded-full shadow-lg">
+            {umkm.Kategori_usaha}
+          </span>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="p-6 flex flex-col">
+        <h3 className="text-xl font-black text-gray-900 line-clamp-1 mb-3 group-hover:text-[#00804c] transition-colors">
+          {umkm.name}
+        </h3>
+
+        <p className="text-gray-600 text-sm line-clamp-3 mb-5 leading-relaxed">
+          {umkm.description}
+        </p>
+
+        <Link
+          href={`/umkm/${umkm.id}`}
+          className="group/btn relative w-full bg-gradient-to-r from-[#00804c] to-[#74C365] hover:from-[#74C365] hover:to-[#00804c] text-white py-3.5 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all transform hover:scale-105 flex items-center justify-center gap-2 overflow-hidden"
+        >
+          <span className="relative z-10">Lihat Detail</span>
+          <ArrowRight className="w-4 h-4 relative z-10 group-hover/btn:translate-x-1 transition-transform" />
+          <div className="absolute inset-0 bg-white/20 translate-y-full group-hover/btn:translate-y-0 transition-transform" />
+        </Link>
       </div>
     </div>
   );

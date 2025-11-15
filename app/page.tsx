@@ -1,313 +1,200 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import { Variants, motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { useRouter } from "next/navigation";
+import { useEffect, useState, useRef, useCallback, memo } from "react";
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import "./HoverButton.css";
 
+// Memoized HoverButton component
+const HoverButton = memo(() => (
+  <a href="/umkm" className="btn">
+    <span>Lihat UMKM</span>
+    <svg width="10px" height="20px" viewBox="0 0 13 18">
+      <path d="M1,5 L11,5" />
+      <polyline points="8 0 12 6 8 12" />
+    </svg>
+  </a>
+));
+
+HoverButton.displayName = "HoverButton";
+
+// Memoized HoverLogo component
+const HoverLogo = memo(() => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = useCallback(() => setIsHovered(true), []);
+  const handleMouseLeave = useCallback(() => setIsHovered(false), []);
+
+  return (
+    <div
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="w-full max-w-xl mx-auto flex justify-center mt-10 rounded-2xl relative"
+    >
+      <div className="absolute inset-0 rounded-4xl bg-[#F6F7ED] blur-3xl mt-20 max-h-35 hover:scale-120 transition-all" />
+      <img
+        src={isHovered ? "/images/gifdoangfix.gif" : "/images/logointro.png"}
+        alt="Logo"
+        className="w-full h-auto object-contain transition-opacity duration-300 z-10"
+        loading="lazy"
+      />
+    </div>
+  );
+});
+
+HoverLogo.displayName = "HoverLogo";
+
+// Memoized Tagline component
+const Tagline = memo(() => (
+  <div className="w-full max-w-2xl mx-auto flex justify-center mt-10 rounded-2xl relative">
+    <div className="absolute inset-0 rounded-2xl bg-[#F6F7ED] blur-xl hover:scale-120 transition-all" />
+    <p className="text-3xl font-bold font-['Helvetica'] relative z-10 p-6 group-hover:scale-105 transition-transform">
+      <span className="bg-gradient-to-br from-[#00804c] to-[#1E488F] bg-clip-text text-transparent">
+        The Source of ECO-friendly Solutions,
+      </span>
+    </p>
+  </div>
+));
+
+Tagline.displayName = "Tagline";
+
+// Memoized Description component
+const Description = memo(() => (
+  <div className="w-full flex justify-center mt-10">
+    <p className="bg-[#F6F7ED] max-w-4xl p-6 rounded-2xl text-2xl text-[#00804c] text-center">
+      Menjadi wadah bagi pelaku UMKM ramah lingkungan untuk memperkenalkan
+      produk dan usahanya kepada masyarakat luas. Menampilkan beragam bisnis
+      yang mengusung prinsip sustainability.
+    </p>
+  </div>
+));
+
+Description.displayName = "Description";
+
 export default function TentangKami() {
-  const ref = useRef<any>(null);
+  const parallaxRef = useRef<any>(null);
 
-  // // deteksi arah scroll
-  // useEffect(() => {
-  //   let lastScrollY = window.scrollY;
-  //   const updateScrollDir = () => {
-  //     const newY = window.scrollY;
-  //     if (newY > lastScrollY) setScrollDir("down");
-  //     else if (newY < lastScrollY) setScrollDir("up");
-  //     lastScrollY = newY > 0 ? newY : 0;
-  //   };
-  //   window.addEventListener("scroll", updateScrollDir);
-  //   return () => window.removeEventListener("scroll", updateScrollDir);
-  // }, []);
-
-  // // deteksi posisi section aktif
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const scrollY = window.scrollY;
-  //     const height = window.innerHeight;
-  //     if (scrollY < height * 0.8) setSection(1);
-  //     else if (scrollY < height * 1.8) setSection(2);
-  //     else if (scrollY < height * 2.8) setSection(3);
-  //     else setSection(4);
-  //   };
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
-
-  // // pindah ke /umkm hanya setelah section ke-4 tersentuh bawah
-  // useEffect(() => {
-  //   const handleBottomScroll = () => {
-  //     const scrollY = window.scrollY;
-  //     const height = window.innerHeight;
-  //     const docHeight = document.documentElement.scrollHeight;
-
-  //     if (scrollY + height >= docHeight - 500) {
-  //       router.push("/umkm");
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleBottomScroll);
-  //   return () => window.removeEventListener("scroll", handleBottomScroll);
-  // }, [router]);
-
-  // const bgPosition =
-  //   section === 1 ? "top" : section === 2 ? "center" : "bottom";
-
-  const HoverButton = () => {
-    return (
-      <a href="/umkm" className="btn">
-        <span>Lihat UMKM</span>
-        <svg width="10px" height="20px" viewBox="0 0 13 18">
-          <path d="M1,5 L11,5"></path>
-          <polyline points="8 0 12 6 8 12" />
-        </svg>
-      </a>
-    );
-  };
-
+  // Auto-scroll effect dengan cleanup yang lebih baik
   useEffect(() => {
     let position = 0;
     let paused = false;
+    let timeoutId: NodeJS.Timeout;
+
     const interval = setInterval(() => {
-      if (!ref.current || paused) return;
+      if (!parallaxRef.current || paused) return;
+
       if (position === 0) {
-        position += 0.6;
-        ref.current.scrollTo(position);
-      }
-      if (position === 0.6) {
+        position = 0.6;
+        parallaxRef.current.scrollTo(position);
+      } else if (position === 0.6) {
         paused = true;
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
           paused = false;
-          position += 0.5;
-          ref.current.scrollTo(position);
-        }, 2000); // delay 1s
+          position = 1.1;
+          parallaxRef.current?.scrollTo(position);
+        }, 2000);
       }
-      // if (position > 2) position = 0; // loop back
-    }, 1000); // scroll interval
-    return () => clearInterval(interval);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, []);
 
-  const [isHovered, setIsHovered] = useState(false);
-
-  const HoverLogo = () => {
-    const [isHovered, setIsHovered] = useState(false);
-
-    return (
-      <div
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        // style={{
-        //   width: "40%",
-        //   height: "auto",
-        //   display: "flex",
-        //   justifyContent: "center",
-        //   alignItems: "center",
-        //   backgroundImage: "url(/images/aboutblur.png)",
-        //   backgroundRepeat: "no-repeat",
-        //   backgroundSize: "105%",
-        //   backgroundPosition: "center",
-        // }}
-        className="w-full max-w-xl mx-auto flex justify-center mt-10 rounded-2xl relative"
-      >
-        <div className="absolute inset-0 rounded-4xl bg-[#F6F7ED] blur-3xl  mt-20 max-h-35 hover:scale-120 transition-all"></div>
-        <img
-          src={isHovered ? "/images/gifdoangfix.gif" : "/images/logointro.png"}
-          style={{
-            width: "100%",
-            height: "auto",
-            objectFit: "contain",
-            transition: "opacity 0.3s ease",
-            zIndex: 1,
-          }}
-        />
-      </div>
-    );
-  };
-
   return (
-    <div>
-      <Parallax pages={2} ref={ref}>
-        <ParallaxLayer
-          offset={1.3}
-          speed={0.3}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            scale: "100%",
-            zIndex: 1,
-            pointerEvents: "auto",
-          }}
-        >
-          <HoverButton />
-        </ParallaxLayer>
+    <Parallax pages={2} ref={parallaxRef}>
+      {/* Button Layer */}
+      <ParallaxLayer
+        offset={1.3}
+        speed={0.3}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 1,
+          pointerEvents: "auto",
+        }}
+      >
+        <HoverButton />
+      </ParallaxLayer>
 
-        <ParallaxLayer
-          offset={0}
-          speed={1}
-          factor={2}
-          style={{
-            width: "100%",
-            height: "100%",
-            overflow: "hidden",
-            pointerEvents: "none",
-          }}
-        >
-          <video
-            src="/videos/langit_ges.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              transform: "scale(1.2)",
-            }}
-          />
-        </ParallaxLayer>
+      {/* Video Background */}
+      <ParallaxLayer
+        offset={0}
+        speed={1}
+        factor={2}
+        style={{
+          width: "100%",
+          height: "100%",
+          overflow: "hidden",
+          pointerEvents: "none",
+        }}
+      >
+        <video
+          src="/videos/langit_ges.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover scale-120"
+          preload="auto"
+        />
+      </ParallaxLayer>
 
-        {/* <ParallaxLayer
-          offset={0}
-          speed={2}
-          factor={4}
-          style={{
-            backgroundImage: "url(/images/gunung2.png)",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            transform: "scale(1.2)",
-            width: "100%",
-            height: "100%",
-            pointerEvents: "none",
-          }}
-        ></ParallaxLayer> */}
-        <ParallaxLayer
-          offset={0}
-          speed={0.1}
-          factor={4}
-          style={{
-            backgroundImage: "url(/images/gunung_flipped_new.png)",
-            backgroundPosition: "center 250px",
-            pointerEvents: "none",
-            backgroundSize: "110%",
-            height: "100%",
-          }}
-        ></ParallaxLayer>
+      {/* Mountain Background 1 */}
+      <ParallaxLayer
+        offset={0}
+        speed={0.1}
+        factor={4}
+        style={{
+          backgroundImage: "url(/images/gunung_flipped_new.png)",
+          backgroundPosition: "center 250px",
+          backgroundSize: "110%",
+          backgroundRepeat: "no-repeat",
+          pointerEvents: "none",
+          height: "100%",
+        }}
+      />
 
-        <ParallaxLayer
-          offset={0}
-          speed={0.5}
-          factor={4}
-          style={{
-            backgroundImage: "url(/images/gunung_sj_new.png)",
-            backgroundPosition: "center 350px",
-            pointerEvents: "none",
-            backgroundSize: "130%",
-          }}
-        ></ParallaxLayer>
+      {/* Mountain Background 2 */}
+      <ParallaxLayer
+        offset={0}
+        speed={0.5}
+        factor={4}
+        style={{
+          backgroundImage: "url(/images/gunung_sj_new.png)",
+          backgroundPosition: "center 350px",
+          backgroundSize: "130%",
+          backgroundRepeat: "no-repeat",
+          pointerEvents: "none",
+        }}
+      />
 
-        <ParallaxLayer offset={0.4} speed={0.2}>
-          <div className="w-full max-w-2xl mx-auto flex justify-center mt-10 rounded-2xl relative">
-            {/* Outer blur glow */}
-            <div className="absolute inset-0 rounded-2xl bg-[#F6F7ED] blur-xl hover:scale-120 transition-all"></div>
+      {/* Tagline */}
+      <ParallaxLayer offset={0.4} speed={0.2}>
+        <Tagline />
+      </ParallaxLayer>
 
-            {/* Content */}
-            <p className="text-3xl font-bold font-['Helvetica'] relative z-10 p-6 group-hover:scale-105 transition-transform">
-              <span className="bg-gradient-to-br from-[#00804c] to-[#1E488F] bg-clip-text text-transparent">
-                The Source of ECO-friendly Solutions,
-              </span>
-            </p>
-          </div>
-        </ParallaxLayer>
-        <ParallaxLayer
-          offset={0.6}
-          speed={0.8}
-          sticky={{ start: 0.6, end: 0.8 }}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            pointerEvents: "auto",
-            background: "transparent",
-          }}
-        >
-          <HoverLogo />
-        </ParallaxLayer>
-        <ParallaxLayer offset={1.4} speed={0.2}>
-          <div className="w-full flex justify-center mt-10">
-            <p className="bg-[#F6F7ED] max-w-4xl p-6 rounded-2xl text-2xl text-[#00804c] text-center">
-              Menjadi wadah bagi pelaku UMKM ramah lingkungan untuk
-              memperkenalkan produk dan usahanya kepada masyarakat luas.
-              Menampilkan beragam bisnis yang mengusung prinsip sustainability.
-            </p>
-          </div>
-        </ParallaxLayer>
+      {/* Logo */}
+      <ParallaxLayer
+        offset={0.6}
+        speed={0.8}
+        sticky={{ start: 0.6, end: 0.8 }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          pointerEvents: "auto",
+          background: "transparent",
+        }}
+      >
+        <HoverLogo />
+      </ParallaxLayer>
 
-        {/* <ParallaxLayer
-          offset={1.8}
-          speed={0.3}
-          factor={0.2}
-          className="gradient-anim"
-          style={{
-            backgroundBlendMode: "overlay",
-            opacity: 0.8,
-          }}
-        ></ParallaxLayer> */}
-      </Parallax>
-    </div>
+      {/* Description */}
+      <ParallaxLayer offset={1.4} speed={0.2}>
+        <Description />
+      </ParallaxLayer>
+    </Parallax>
   );
 }
-
-/* 🎞️ Komponen Section dengan animasi dua arah */
-// function FadeSection({
-//   children,
-//   index,
-//   direction,
-// }: {
-//   children: React.ReactNode;
-//   index: number;
-//   direction: "up" | "down";
-// }) {
-//   const controls = useAnimation();
-//   const [ref, inView] = useInView({ threshold: 0.4 });
-
-//   useEffect(() => {
-//     if (inView) controls.start("visible");
-//     else controls.start("exit");
-//   }, [inView, controls]);
-
-//   const variants: Variants = {
-//     hidden: {
-//       opacity: 0,
-//       y: direction === "down" ? 80 : -80,
-//     },
-//     visible: {
-//       opacity: 1,
-//       y: 0,
-//       transition: { duration: 0.8, ease: "easeOut" },
-//     },
-//     exit: {
-//       opacity: 0,
-//       y: direction === "down" ? -80 : 80,
-//       transition: { duration: 0.8, ease: "easeInOut" },
-//     },
-//   };
-
-// return (
-//   <motion.section
-//     ref={ref}
-//     initial="hidden"
-//     animate={controls}
-//     variants={variants}
-//     className="flex flex-col items-center justify-center text-center h-screen px-6"
-//     style={{ minHeight: "100vh" }}
-//   >
-//     {children}
-//   </motion.section>
-// );
-//}
