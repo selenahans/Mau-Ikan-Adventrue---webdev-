@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
+import { supabaseServer } from "@/lib/supabaseServer";
 
 export async function GET(
   req: Request,
@@ -7,6 +7,7 @@ export async function GET(
 ) {
   const { id } = await context.params;
   const umkmId = parseInt(id);
+  const supabase = await supabaseServer();
 
   // Ambil data UMKM
   const { data: umkm, error: umkmErr } = await supabase
