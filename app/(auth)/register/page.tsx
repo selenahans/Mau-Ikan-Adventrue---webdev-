@@ -30,11 +30,11 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 via-white to-teal-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f6f7ed] via-white to-[#74C365]/60 px-4">
       <div className="relative w-full max-w-md">
-        {/* background glow */}
-        <div className="absolute -top-20 -left-20 w-72 h-72 bg-green-300/40 rounded-full blur-3xl" />
-        <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-teal-300/40 rounded-full blur-3xl" />
+        {/* Background glow */}
+        <div className="absolute -top-20 -left-20 w-72 h-72 bg-[#74C365] opacity-50 rounded-full blur-3xl" />
+        <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-[#DBE64C] opacity-50 rounded-full blur-3xl" />
 
         {/* card form */}
         <form
@@ -42,14 +42,14 @@ export default function RegisterPage() {
           className="relative bg-white/70 backdrop-blur-xl border border-white/40 shadow-xl rounded-2xl p-8"
         >
           <div className="flex flex-col items-center mb-6">
-            <div className="bg-gradient-to-br from-green-600 to-teal-600 p-3 rounded-full shadow-md mb-3">
+            <div className="bg-gradient-to-br from-[#74C365] to-[#00804c] p-3 rounded-full shadow-md mb-3">
               <Leaf className="text-white w-6 h-6" />
             </div>
             <h1 className="text-2xl font-bold text-green-800">
               Buat Akun Baru
             </h1>
             <p className="text-gray-500 text-sm mt-1 text-center">
-              Daftarkan akun untuk bergabung di platform UMKM ECOsrot 🌿
+              Daftarkan akun untuk bergabung di platform UMKM ECOsrot
             </p>
           </div>
 
@@ -80,7 +80,7 @@ export default function RegisterPage() {
           {/* button */}
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-lg py-2 font-semibold shadow-md hover:shadow-lg hover:brightness-110 transition-all"
+            className="w-full bg-gradient-to-br from-[#74C365] to-[#00804c] text-white rounded-lg py-2 font-semibold shadow-md hover:shadow-lg hover:brightness-110 transition-all"
           >
             Daftar Sekarang
           </button>

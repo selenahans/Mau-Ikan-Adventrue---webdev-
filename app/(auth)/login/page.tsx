@@ -33,11 +33,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 via-white to-teal-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f6f7ed] via-white to-[#74C365]/60 px-4">
       <div className="relative w-full max-w-md">
         {/* Background glow */}
-        <div className="absolute -top-20 -left-20 w-72 h-72 bg-green-300/40 rounded-full blur-3xl" />
-        <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-teal-300/40 rounded-full blur-3xl" />
+        <div className="absolute -top-20 -left-20 w-72 h-72 bg-[#74C365] opacity-50 rounded-full blur-3xl" />
+        <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-[#DBE64C] opacity-50 rounded-full blur-3xl" />
 
         {/* Card */}
         <form
@@ -45,10 +45,10 @@ export default function LoginPage() {
           className="relative bg-white/70 backdrop-blur-xl border border-white/40 shadow-xl rounded-2xl p-8"
         >
           <div className="flex flex-col items-center mb-6">
-            <div className="bg-gradient-to-br from-green-600 to-teal-600 p-3 rounded-full shadow-md mb-3">
+            <div className="bg-gradient-to-br from-[#74C365] to-[#00804c] p-3 rounded-full shadow-md mb-3">
               <LogIn className="text-white w-6 h-6" />
             </div>
-            <h1 className="text-2xl font-bold text-green-800">Masuk ke Akun</h1>
+            <h1 className="text-2xl font-bold text-[#00804c]">Masuk ke Akun</h1>
           </div>
 
           {/* Email Input */}
@@ -79,7 +79,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-lg py-2 font-semibold shadow-md transition-all hover:brightness-110 hover:shadow-lg ${
+            className={`w-full bg-gradient-to-br from-[#74C365] to-[#00804c] text-white rounded-lg py-2 font-semibold shadow-md transition-all hover:brightness-110 hover:shadow-lg ${
               loading ? "opacity-70 cursor-not-allowed" : ""
             }`}
           >

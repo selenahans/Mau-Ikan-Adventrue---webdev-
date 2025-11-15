@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
-import { Instagram, Phone } from "lucide-react";
+import { Instagram, Phone, Mail } from "lucide-react";
 import UmkmRating from "@/components/ulasanUmkm";
 
 export default function UmkmDetailPage() {
@@ -260,23 +260,58 @@ export default function UmkmDetailPage() {
 
         <div className="flex flex-wrap justify-center gap-6">
           {/* WhatsApp */}
-          <div className="w-64 border border-green-600 bg-green-50 rounded-xl p-6 text-center hover:shadow-lg transition">
+          <div className="w-64 border border-[#00804c] bg-green-50 rounded-xl p-6 text-center hover:shadow-lg transition">
             <Phone className="text-green-700 w-8 h-8 mx-auto mb-2" />
             <h3 className="font-semibold">WhatsApp</h3>
             <p>{umkm.nomer || "-"}</p>
+
+            {umkm.nomer && umkm.nomer !== "-" && (
+              <button
+                className="mt-3 w-full bg-[#00804c] text-white py-2 rounded-lg hover:bg-[#74C365] transition"
+                onClick={() =>
+                  window.open(`https://wa.me/${umkm.nomer}`, "_blank")
+                }
+              >
+                Hubungi
+              </button>
+            )}
           </div>
 
           {/* Instagram */}
-          <div className="w-64 border border-green-600 bg-green-50 rounded-xl p-6 text-center hover:shadow-lg transition">
+          <div className="w-64 border border-[#00804c] bg-green-50 rounded-xl p-6 text-center hover:shadow-lg transition">
             <Instagram className="text-[#00804c] w-8 h-8 mx-auto mb-2" />
             <h3 className="font-semibold">Instagram</h3>
             <p>@{umkm.akun_toko || "-"}</p>
+
+            {umkm.akun_toko && umkm.akun_toko !== "-" && (
+              <button
+                className="mt-3 w-full bg-[#00804c] text-white py-2 rounded-lg hover:bg-[#74C365] transition"
+                onClick={() =>
+                  window.open(
+                    `https://instagram.com/${umkm.akun_toko}`,
+                    "_blank"
+                  )
+                }
+              >
+                Hubungi
+              </button>
+            )}
           </div>
 
           {/* Email */}
           <div className="w-64 border border-green-600 bg-green-50 rounded-xl p-6 text-center hover:shadow-lg transition">
+            <Mail className="text-[#00804c] w-8 h-8 mx-auto mb-2" />
             <h3 className="font-semibold">Email</h3>
             <p>{umkm.email || "-"}</p>
+
+            {umkm.email && umkm.email !== "-" && (
+              <button
+                className="mt-3 w-full bg-[#00804c] text-white py-2 rounded-lg hover:bg-[#74C365] transition"
+                onClick={() => window.open(`mailto:${umkm.email}`)}
+              >
+                Hubungi
+              </button>
+            )}
           </div>
         </div>
       </section>
